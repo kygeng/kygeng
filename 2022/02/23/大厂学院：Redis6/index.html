@@ -1,0 +1,1253 @@
+
+
+<!DOCTYPE html>
+<html lang="en" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Redis6 - Hexo</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  <meta name="keywords" content=", Redis,IO多路复用,布隆过滤器">
+  <meta name="description" content="大厂学院-Redis61.课程说明
+课程说明
+
+参考资...">
+  <meta name="author" content="John Doe">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/kygeng/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: false,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: false
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '我在开了灯的床头下，想问问自己的心啊。',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: 'https://pic.izhaoo.com/weapp-code.jpg',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: true,
+        path: '/search.xml'
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+        <i class="iconfont iconsearch j-navbar-search"></i>
+      
+    </div>
+    <div class="center">Redis6</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries " class="underline "> 相册</a>
+      </li><li class="menu-item">
+        <a href="/archives " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about " class="underline "> 关于</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226171318.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Redis6</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>February 23, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>23781</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <h1 id="大厂学院-Redis6"><a href="#大厂学院-Redis6" class="headerlink" title="大厂学院-Redis6"></a>大厂学院-Redis6</h1><h2 id="1-课程说明"><a href="#1-课程说明" class="headerlink" title="1.课程说明"></a>1.课程说明</h2><blockquote>
+<p>课程说明</p>
+</blockquote>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://www.itdachang.com/">https://www.itdachang.com/</a></p>
+<p>本文章基于【大厂学苑】课程《极致性能Redis实战与原理》进行整理/记录，仅用于个人学习/交流使用。</p>
+<blockquote>
+<p>前置要求</p>
+</blockquote>
+<p>学过Redis</p>
+<p>安装了Redis</p>
+<p>Redis版本必须是 6.0.8+</p>
+<blockquote>
+<p>相关网站</p>
+</blockquote>
+<blockquote>
+<p>几篇文章【对于课程内容更加深刻讲解】</p>
+</blockquote>
+<p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144805500">Redis 6.0 多线程IO处理过程详解</a></p>
+<blockquote>
+<p>本课程落地案例</p>
+</blockquote>
+<p>案例实战：SpringBoot + Mybatis + Redis(重写Redis的序列化)的缓存实战</p>
+<p>案例实战：微信文章阅读量小厂统计</p>
+<p>案例实战：天猫网站首页亿级UV的Redis统计方案</p>
+<p>案例实战：美团地图位置附近的酒店推送</p>
+<p>案例实战：Redis布隆过滤器+防止缓存穿透含白名单校验器</p>
+<p>案例实战：淘宝聚划算功能实现+防止缓存击穿</p>
+<p>案例实战：分布式锁redisson实战和源码深度分析</p>
+<p>案例实战：B站视频、淘宝购物分享短连接推广</p>
+<p>案例实战：微信抢红包</p>
+<h2 id="2-Redis官网查阅和基本配置"><a href="#2-Redis官网查阅和基本配置" class="headerlink" title="2.Redis官网查阅和基本配置"></a>2.Redis官网查阅和基本配置</h2><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120713.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213135002620"></p>
+<h2 id="3-Redis单线程与多线程"><a href="#3-Redis单线程与多线程" class="headerlink" title="3.Redis单线程与多线程"></a>3.Redis单线程与多线程</h2><h3 id="Redis3单线程"><a href="#Redis3单线程" class="headerlink" title="Redis3单线程"></a>Redis3单线程</h3><h4 id="什么是Redis单线程"><a href="#什么是Redis单线程" class="headerlink" title="什么是Redis单线程"></a>什么是Redis单线程</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120714.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213135209574"></p>
+<p><strong>同步删除</strong> : 删除key时释放value空间是在主线程中执行。</p>
+<p><strong>异步删除</strong> : 删除key时释放value空间是在异步线程中执行。</p>
+<p>使用 unlink指令， 它能对删除操作进行懒处理，丢给后退线程来异步回收内存  <code>unlink key</code></p>
+<h4 id="Redis单线程的意义"><a href="#Redis单线程的意义" class="headerlink" title="Redis单线程的意义"></a>Redis单线程的意义</h4><p><strong>Redis单线程：</strong></p>
+<p>主要是指<code>Redis的网络IO</code>和<code>键值对读写</code>是由<code>一个线程</code>来完成的，Redis在处理客户端的请求时，包括<code>获取(socket 读)、解析、执行、内容返回(socket写)</code>等都由一个顺序串行的主线程处理，这就是所谓的“单线程”。这也是<code>Redis对外提供键值存储服务</code>的主要流程。</p>
+<p><strong>Redis多线程：</strong></p>
+<p>但Redis的其他功能，比如持久化、异步删除、集群数据同步等等，其实是由额外的线程执行的。</p>
+<p>Redis工作线程是单线程的，但是，整个Redis来说，是多线程的</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120715.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213135323186"></p>
+<h4 id="Redis3-X单线程快的原因"><a href="#Redis3-X单线程快的原因" class="headerlink" title="Redis3.X单线程快的原因"></a>Redis3.X单线程快的原因</h4><p><code>基于内存操作：</code>Redis的所有数据都存在内存中，因此所有的运算都是内存级别的，所以他的性能比较高;</p>
+<p><code>数据结构简单：</code>Redis 的数据结构是专门设计的，而这些简单的数据结构的查找和操作的时间大部分复杂度都是o(1)，因此性能比较高</p>
+<p><code>多路复用和非阻塞I/O: </code>Redis使用I/O多路复用功能来监听多个socket连接客户端，这样就可以使用一个线程连接来处理多个请求，减少线程切换带来的开销，同时也避免了I/O阻塞操作</p>
+<p><code>避免上下文切换：</code>因为是单线程模型，因此就避免了不必要的上下文切换和多线程竞争，这就省去了多线程切换带来的时间和性能上的消耗</p>
+<h3 id="Redis4多线程"><a href="#Redis4多线程" class="headerlink" title="Redis4多线程"></a>Redis4多线程</h3><h4 id="Redis4采用多线程的原因"><a href="#Redis4采用多线程的原因" class="headerlink" title="Redis4采用多线程的原因"></a>Redis4采用多线程的原因</h4><p><font color=red><strong>Redis的性能瓶颈在于内存或网络IO，不在于内存</strong></font></p>
+<p>对于内存来说，优化方向容易（加内容条）</p>
+<p>所以大部分优化的内容在于网络IO，所以出现了 网络IO多路复用技术</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120716.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213135541976"></p>
+<p><strong>简单来说，Redis 4.0之前一直采用单线程的主要原因有以下三个:</strong></p>
+<p>1、使用单线程模型是Redis 的开发和维护更简单，因为单线程模型方便开发和调试;</p>
+<p>2、即使使用单线程模型也并发的处理多客户端的请求，主要使用的是多路复用和非阻塞IO;</p>
+<p>3、对于Redis 系统来说，<font color=red>主要的性能瓶颈是内存或者网络带宽而并非 CPU。</font></p>
+<h4 id="Redis单线程的问题"><a href="#Redis单线程的问题" class="headerlink" title="Redis单线程的问题"></a>Redis单线程的问题</h4><p><strong>删除大的key的时候卡顿</strong></p>
+<p>单线程也有单线程的苦恼</p>
+<p><strong>举个栗子：</strong></p>
+<p>正常情况下使用 del 指令可以很快的删除数据，而当<code>被删除的 key是一个非常大的对象时</code>，例如时包含了成千上万个元素的hash集合时，那么<code> del 指令就会造成Redis主线程卡顿</code>。</p>
+<p>这就是redis3.x单线程时代最经典的故障，大key删除的头疼问题，</p>
+<p>由于redis是单线程的，del bigKey …..</p>
+<p>等待很久这个线程才会释放，类似加了一个synchronized锁，你可以想象高并发下，程序堵成什么样子?</p>
+<p><strong>如何解决：</strong></p>
+<p>使用<code>惰性删除</code>可以有效的避免Redis卡顿的问题</p>
+<p>在Redis 4.0就引入了<code>多个线程来实现数据的异步惰性删除</code>但是<code>其处理读写请求的仍然只有一个线程，所以仍然算是单线程</code></p>
+<h4 id="Redis异步删除解决方案"><a href="#Redis异步删除解决方案" class="headerlink" title="Redis异步删除解决方案"></a>Redis异步删除解决方案</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120717.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213135720964"></p>
+<p>Redis提供了flushdb和flushall指令， 用来清空数据库， 这也是极其缓慢的操作。Redis4.0同样给这两个指令带来异步化， 在指令后面增加async参数就可以将整个大树连根拔起， 扔给后台线程慢慢焚烧</p>
+<h2 id="4-多线程I-O多路复用简介"><a href="#4-多线程I-O多路复用简介" class="headerlink" title="4.多线程I/O多路复用简介"></a>4.多线程I/O多路复用简介</h2><p>Redis必须安装在linux、Unix系统上才能发挥最大性能，因为epoll函数</p>
+<h3 id="Redis的性能瓶颈"><a href="#Redis的性能瓶颈" class="headerlink" title="Redis的性能瓶颈"></a>Redis的性能瓶颈</h3><p>对于Redis主要的性能瓶颈是内存或者网络带宽而并非CPU。</p>
+<img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120718.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213172217277" style="zoom:67%;" />
+
+<h3 id="Unix编程中的五种IO模型"><a href="#Unix编程中的五种IO模型" class="headerlink" title="Unix编程中的五种IO模型"></a>Unix编程中的五种IO模型</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120719.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213142101919"></p>
+<h3 id="Redis是单线程还是多线程？"><a href="#Redis是单线程还是多线程？" class="headerlink" title="Redis是单线程还是多线程？"></a>Redis是单线程还是多线程？</h3><p>Redis工作线程是单线程的，但是，整个Redis来说，是多线程的</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120720.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213142213970"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120721.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213142246252"></p>
+<h2 id="5-开启Redis6的多线程"><a href="#5-开启Redis6的多线程" class="headerlink" title="5.开启Redis6的多线程"></a>5.开启Redis6的多线程</h2><p>而在Redis 6.0中引入了<code>IO多线程的读写</code>，这样就可以更加高效的处理更多的任务了</p>
+<p><font color=red><strong>Redis <code>只是将IO读写变成了多线程</code>，而<code>命令的执行</code>依旧是由<code>主线程串行执行</code>的，因此在多线程下操作Redis<code>不会出现线程安全</code>的问题。</strong></font></p>
+<p>Redis6多线程数的设置：</p>
+<p>关于线程数的设置，官方的建议是如果为<code>4核的CPU</code>，建议线程数设置为<code>2或3</code>，如果为<code>8核CPU</code>建议线程数<code>设置为6</code>，<code>线程数一定要小于机器核数</code>，线程数并不是越大越好。</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120722.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213142319711"></p>
+<h2 id="6-Redis简单案例"><a href="#6-Redis简单案例" class="headerlink" title="6.Redis简单案例"></a>6.Redis简单案例</h2><h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120723.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213150140098"></p>
+<h3 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h3><p><code>缓存击穿：</code>击中、穿过去：查到Redis上，Redis缓存key过期</p>
+<p><code>缓存穿透：</code>穿透：查Redis没有，查数据库没有，都没有，Redis和数据库都穿透过去了</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120724.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213151233469"></p>
+<h3 id="借鉴思想"><a href="#借鉴思想" class="headerlink" title="借鉴思想"></a>借鉴思想</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120725.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213151253756"></p>
+<h2 id="7-Redis五种数据类型"><a href="#7-Redis五种数据类型" class="headerlink" title="7.Redis五种数据类型"></a>7.Redis五种数据类型</h2><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120726.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213170827882"></p>
+<p>Redis 本身是有一个<code>Redis 发布订阅(pup/sub)</code>来<code>实现消息队列</code>的功能，但它有个缺点就是<code>消息无法持久化</code>，如果出现网络断开、Redis 宕机等，消息就会被丢弃。简单来说发布订阅(pub/sub)可以分发消息，但无法记录历史消息。</p>
+<p>而<code>Redis Stream 提供了消息的持久化和主备复制功能</code>，可以让<code>任何客户端访问任何时刻的数据</code>，并且<code>能记住每一个客户端的访问位置</code>，还能<code>保证消息不丢失</code>。它算是redis自己消息功能的补充。</p>
+<p>但是，术业有专攻，一般使用<code>主流MQ</code>(Kafka/RabbitMQ/RocketMQ/Pulsar)来实现消息队列功能。</p>
+<h3 id="数据类型API"><a href="#数据类型API" class="headerlink" title="数据类型API"></a>数据类型API</h3><h4 id="string"><a href="#string" class="headerlink" title="string"></a>string</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120727.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213170854686"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120728.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220092754058"></p>
+<h4 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120729.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213170905364"></p>
+<h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120730.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213170925793"></p>
+<p><code>一个双端链表的结构</code>，容量是2的32次方减1个元素，大概40多亿，主要功能有push/pop等，一般用在栈、队列、消息队列等场景。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_q0bI62iFrG8h-gZ-bCvNQ">Redis 消息队列的三种方案（List、Streams、Pub/Sub）</a></p>
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120731.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213171020047"></p>
+<h4 id="zset"><a href="#zset" class="headerlink" title="zset"></a>zset</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120732.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213171053759"></p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><h4 id="string：统计"><a href="#string：统计" class="headerlink" title="string：统计"></a>string：统计</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120733.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220092844654"></p>
+<h4 id="hash：购物车"><a href="#hash：购物车" class="headerlink" title="hash：购物车"></a>hash：购物车</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120734.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220093017545"></p>
+<h4 id="list：消息订阅、评论列表"><a href="#list：消息订阅、评论列表" class="headerlink" title="list：消息订阅、评论列表"></a>list：消息订阅、评论列表</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120735.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220093218701"></p>
+<h4 id="set：认识的人、抽奖"><a href="#set：认识的人、抽奖" class="headerlink" title="set：认识的人、抽奖"></a>set：认识的人、抽奖</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120736.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220093404335"></p>
+<h4 id="zset：排行榜、热搜"><a href="#zset：排行榜、热搜" class="headerlink" title="zset：排行榜、热搜"></a>zset：排行榜、热搜</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120737.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220093511222"></p>
+<h4 id="补充说明：list和set做评论列表"><a href="#补充说明：list和set做评论列表" class="headerlink" title="补充说明：list和set做评论列表"></a>补充说明：list和set做评论列表</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120738.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220093625131"></p>
+<h3 id="综合案例：微信点赞"><a href="#综合案例：微信点赞" class="headerlink" title="综合案例：微信点赞"></a>综合案例：微信点赞</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120739.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213171229895"></p>
+<h2 id="8-Redis新的数据类型"><a href="#8-Redis新的数据类型" class="headerlink" title="8.Redis新的数据类型"></a>8.Redis新的数据类型</h2><h3 id="为什么会有着三种数据类型"><a href="#为什么会有着三种数据类型" class="headerlink" title="为什么会有着三种数据类型"></a>为什么会有着三种数据类型</h3><h4 id="面试题反馈"><a href="#面试题反馈" class="headerlink" title="面试题反馈"></a>面试题反馈</h4><p>手机App中的每天的用巨登录信息：1天对应1系列用户ID或移动设备ID</p>
+<p>电商网站上商品的用巨评论列表:1个商品对应了1系列的评论;</p>
+<p>用巨在手机App上的签到打卡信息:1天对应1系列用巨的签到记录</p>
+<p>应用网站上的网页访问信息:1个网页对应1系列的访问点击。</p>
+<p><strong>面试问：记录对集合中的数据进行统计</strong></p>
+<p>在移动应用中，需要统计每天的新增用户数和第2天的留存用户数;</p>
+<p>在电商网站的商品评论中，需要统计评论列表中的最新评论;</p>
+<p>在签到打卡中，需要统计一个月内连续打卡的用户数;</p>
+<p>在网页访问记录中，需要统计独立访客(UniqueVisitor，UV）量。</p>
+<p>……</p>
+<h4 id="需求的痛点"><a href="#需求的痛点" class="headerlink" title="需求的痛点"></a>需求的痛点</h4><p><strong>痛点：</strong></p>
+<p>类似今日头条、抖音、淘宝这样的额用户访问级别都是<code>亿级</code>的，请问如何处理?</p>
+<p><strong>需求痛点：</strong></p>
+<ul>
+<li><p>   亿级数据的收集+统计</p>
+</li>
+<li><p>一句话：<code>存的进+取得快+多统计</code></p>
+</li>
+<li><p>真正有价值的是统计……</p>
+</li>
+</ul>
+<h3 id="亿级系统中常见的四种统计"><a href="#亿级系统中常见的四种统计" class="headerlink" title="亿级系统中常见的四种统计"></a>亿级系统中常见的四种统计</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120740.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213171616208"></p>
+<h4 id="排序统计案例设计"><a href="#排序统计案例设计" class="headerlink" title="排序统计案例设计"></a>排序统计案例设计</h4><p>抖音视频最新评论留言的场景，请你设计一个展现列表。</p>
+<p>考察你的数据结构和设计思路</p>
+<p>以抖音vcr最新的留言评价为案例，所有评论需要两个功能，<code>按照时间排序+分页</code>显示</p>
+<p>能够排序+分页显示的redis数据结构是什么合适?</p>
+<p><strong>list和zest的选择：</strong></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120741.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211213171749244"></p>
+<h3 id="bitmap"><a href="#bitmap" class="headerlink" title="bitmap"></a>bitmap</h3><h4 id="什么是bitmap"><a href="#什么是bitmap" class="headerlink" title="什么是bitmap"></a>什么是bitmap</h4><p>一句话：由<code>0和1状态表现</code>的二进制位的bit数组</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120742.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214110434830"></p>
+<h4 id="API说明"><a href="#API说明" class="headerlink" title="API说明"></a>API说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120743.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214101906760"></p>
+<h4 id="使用场景说明"><a href="#使用场景说明" class="headerlink" title="使用场景说明"></a>使用场景说明</h4><p><font color=red><strong>能干嘛：用于状态统计（签到统计、是否登录、是否点击…）</strong></font></p>
+<ul>
+<li><p>Y、N，类似AtomicBoolean，用户是否登陆过Y、N</p>
+</li>
+<li><p>比如京东每日签到送京豆电影、广告是否被点击播放过</p>
+</li>
+<li><p>钉钉打未上下班，签到统计</p>
+</li>
+</ul>
+<p>在签到统计时，<code>每个用户一天的签到用1个bit位</code>就能表示</p>
+<p><code>一个月（假设是31天）的签到情况用31个bit位</code>就可以，<code>一年的签到也只需要用365个bit位</code>，根本不用太复杂的集合类型</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120744.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214101437057"></p>
+<h4 id="案例：JD签到领京豆"><a href="#案例：JD签到领京豆" class="headerlink" title="案例：JD签到领京豆"></a>案例：JD签到领京豆</h4><p>实现方式：</p>
+<ul>
+<li>MySQL（淘汰）</li>
+<li>bitmap</li>
+</ul>
+<h5 id="MySQL实现方式"><a href="#MySQL实现方式" class="headerlink" title="MySQL实现方式"></a>MySQL实现方式</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120745.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214101633931"></p>
+<h5 id="困难和解决思路"><a href="#困难和解决思路" class="headerlink" title="困难和解决思路"></a>困难和解决思路</h5><p>方法正确但是难以落地实现，</p>
+<p>签到用户量较小时这么设计能行，但京东这个体量的用户（估算3000W签到用户，一天一条数据，一个月就是9亿数据）对于京东这样的体量，如果一条签到记录对应着当日用记录，那会很恐怖…..</p>
+<p>如何解决这个痛点?</p>
+<p>1、一条签到记录对应一条记录，会占据越来越大的空间。</p>
+<p>2、一个月最多31天，刚好我们的int类型是32位，那这样一个int类型就可以搞定一个月，32位大于31天，当天来了位是1没来就是0。</p>
+<p>3、一条数据直接存储一个月的签到记录，不再是存储一天的签到记录。</p>
+<h5 id="bitmap方式"><a href="#bitmap方式" class="headerlink" title="bitmap方式"></a>bitmap方式</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120746.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214102008346"></p>
+<h4 id="bittop说明"><a href="#bittop说明" class="headerlink" title="bittop说明"></a>bittop说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120747.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214102252638"></p>
+<h4 id="strlen说明"><a href="#strlen说明" class="headerlink" title="strlen说明"></a>strlen说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120748.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214102450725"></p>
+<h4 id="bitmap底层编码说明"><a href="#bitmap底层编码说明" class="headerlink" title="bitmap底层编码说明"></a>bitmap底层编码说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120749.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214102536049"></p>
+<h3 id="hyperloglgo"><a href="#hyperloglgo" class="headerlink" title="hyperloglgo"></a>hyperloglgo</h3><h4 id="专业名词说明"><a href="#专业名词说明" class="headerlink" title="专业名词说明"></a>专业名词说明</h4><p>什么是<code>UV：Unique Visitor，独立访客</code>，一般理解为客户端IP，需要去重考虑</p>
+<p>什么是<code>PV：什么是PV，Page View，页面浏览量</code>，不用去重</p>
+<p>什么是<code>DAU：Daily Active User，日活跃用户量</code>。登录或者使用了某个产品的用户数(去重复登录的用户)常用于反映网站、互联网应用或者网络游戏的运营情况</p>
+<p>什么是<code>MAU：Monthly Active User，月活跃用户量</code></p>
+<h4 id="什么是hyperloglog"><a href="#什么是hyperloglog" class="headerlink" title="什么是hyperloglog"></a>什么是hyperloglog</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120750.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214103839296"></p>
+<h4 id="实现去重统计的方案"><a href="#实现去重统计的方案" class="headerlink" title="实现去重统计的方案"></a>实现去重统计的方案</h4><ul>
+<li><p>Java中的HashSet</p>
+</li>
+<li><p>MySQL</p>
+</li>
+<li><p>Redis中的Set</p>
+</li>
+<li><p>Redis中的bitmaps</p>
+</li>
+<li><p>Redis中的hyperloglog</p>
+</li>
+</ul>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120751.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214103956435"></p>
+<p>样本元素越多内存消耗急剧增大，难以管控+各种慢，对于亿级统计不太合适，大数据害死人</p>
+<h4 id="原理说明"><a href="#原理说明" class="headerlink" title="原理说明"></a>原理说明</h4><p><code>只是进行不重复的基数统计</code>，不是集合也不保存数据，<code>只记录数量而不记录具体内容</code>。</p>
+<p><code>通过牺牲准确率来换取空间</code>，对于不要求绝对准确率的场景下可以使用，因为<code>概率算法不直接存储数据本身</code>，通过一定的概率统计方法预估基数值，同时保证误差在一定范围内，由于又不储存数据故此可以大大节约内存。</p>
+<p>HyperLogLog就是一种概率算法的实现。</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120752.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214104206448"></p>
+<h4 id="面试题：为什么Redis集群最大槽数是16384"><a href="#面试题：为什么Redis集群最大槽数是16384" class="headerlink" title="面试题：为什么Redis集群最大槽数是16384"></a>面试题：为什么Redis集群最大槽数是16384</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120753.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194608719"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120754.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194600102"></p>
+<h4 id="命令使用"><a href="#命令使用" class="headerlink" title="命令使用"></a>命令使用</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120755.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214104449243"></p>
+<h4 id="案例：访问人数统计"><a href="#案例：访问人数统计" class="headerlink" title="案例：访问人数统计"></a>案例：访问人数统计</h4><p>UV的统计需要去重，一个用户一天内的多次访问只能算作一次</p>
+<p>淘宝、天猫首页的UV，平均每天是1~1.5个亿左右</p>
+<p>每天存1.5个亿的IP，访问者来了后先去查是否存在，不存在加入</p>
+<h5 id="解决方案1：使用Redis的hash存储结构"><a href="#解决方案1：使用Redis的hash存储结构" class="headerlink" title="解决方案1：使用Redis的hash存储结构"></a>解决方案1：使用Redis的hash存储结构</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120756.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214112652520"></p>
+<h5 id="解决方案2：Redis的hyperLogLog"><a href="#解决方案2：Redis的hyperLogLog" class="headerlink" title="解决方案2：Redis的hyperLogLog"></a>解决方案2：Redis的hyperLogLog</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120757.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214112731280"></p>
+<h3 id="GEO"><a href="#GEO" class="headerlink" title="GEO"></a>GEO</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120758.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214144535620"></p>
+<h4 id="地理位置名词说明"><a href="#地理位置名词说明" class="headerlink" title="地理位置名词说明"></a>地理位置名词说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120759.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214112844453"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120800.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214112855286"></p>
+<h4 id="命令说明"><a href="#命令说明" class="headerlink" title="命令说明"></a>命令说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120801.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214112940694"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120802.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214112955687"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120803.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214113009971"></p>
+<h4 id="案例：附近的XX"><a href="#案例：附近的XX" class="headerlink" title="案例：附近的XX"></a>案例：附近的XX</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GeoController</span><br>&#123;<br>    <span class="hljs-keyword">public</span>  <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">CITY</span> <span class="hljs-operator">=</span><span class="hljs-string">&quot;city&quot;</span>;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RedisTemplate redisTemplate;<br><br>    <span class="hljs-meta">@ApiOperation(&quot;新增天安门故宫长城经纬度&quot;)</span><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/geoadd&quot;,method = RequestMethod.POST)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">geoAdd</span><span class="hljs-params">()</span><br>    &#123;<br>        Map&lt;String, Point&gt; map= <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        map.put(<span class="hljs-string">&quot;天安门&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Point</span>(<span class="hljs-number">116.403963</span>,<span class="hljs-number">39.915119</span>));<br>        map.put(<span class="hljs-string">&quot;故宫&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Point</span>(<span class="hljs-number">116.403414</span> ,<span class="hljs-number">39.924091</span>));<br>        map.put(<span class="hljs-string">&quot;长城&quot;</span> ,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Point</span>(<span class="hljs-number">116.024067</span>,<span class="hljs-number">40.362639</span>));<br><br>        redisTemplate.opsForGeo().add(CITY,map);<br><br>        <span class="hljs-keyword">return</span> map.toString();<br>    &#125;<br><br>    <span class="hljs-meta">@ApiOperation(&quot;获取地理位置的坐标&quot;)</span><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/geopos&quot;,method = RequestMethod.GET)</span><br>    <span class="hljs-keyword">public</span> Point <span class="hljs-title function_">position</span><span class="hljs-params">(String member)</span> &#123;<br>        <span class="hljs-comment">//获取经纬度坐标</span><br>        List&lt;Point&gt; list= <span class="hljs-built_in">this</span>.redisTemplate.opsForGeo().position(CITY,member);<br>        <span class="hljs-keyword">return</span> list.get(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@ApiOperation(&quot;geohash算法生成的base32编码值&quot;)</span><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/geohash&quot;,method = RequestMethod.GET)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">hash</span><span class="hljs-params">(String member)</span> &#123;<br>        <span class="hljs-comment">//geohash算法生成的base32编码值</span><br>        List&lt;String&gt; list= <span class="hljs-built_in">this</span>.redisTemplate.opsForGeo().hash(CITY,member);<br>        <span class="hljs-keyword">return</span> list.get(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@ApiOperation(&quot;计算两个位置之间的距离&quot;)</span><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/geodist&quot;,method = RequestMethod.GET)</span><br>    <span class="hljs-keyword">public</span> Distance <span class="hljs-title function_">distance</span><span class="hljs-params">(String member1, String member2)</span> &#123;<br>        Distance distance= <span class="hljs-built_in">this</span>.redisTemplate.opsForGeo().distance(CITY,member1,member2, RedisGeoCommands.DistanceUnit.KILOMETERS);<br>        <span class="hljs-keyword">return</span> distance;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 通过经度，纬度查找附近的</span><br><span class="hljs-comment">     * 北京王府井位置116.418017,39.914402,这里为了方便讲课，故意写死</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@ApiOperation(&quot;通过经度，纬度查找附近的&quot;)</span><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/georadius&quot;,method = RequestMethod.GET)</span><br>    <span class="hljs-keyword">public</span> GeoResults <span class="hljs-title function_">radiusByxy</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//这个坐标是北京王府井位置</span><br>        <span class="hljs-type">Circle</span> <span class="hljs-variable">circle</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Circle</span>(<span class="hljs-number">116.418017</span>, <span class="hljs-number">39.914402</span>, Metrics.MILES.getMultiplier());<br>        <span class="hljs-comment">//返回50条</span><br>        RedisGeoCommands.<span class="hljs-type">GeoRadiusCommandArgs</span> <span class="hljs-variable">args</span> <span class="hljs-operator">=</span> RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs().includeDistance().includeCoordinates().sortAscending().limit(<span class="hljs-number">10</span>);<br>        GeoResults&lt;RedisGeoCommands.GeoLocation&lt;String&gt;&gt; geoResults= <span class="hljs-built_in">this</span>.redisTemplate.opsForGeo().radius(CITY,circle, args);<br>        <span class="hljs-keyword">return</span> geoResults;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 通过地方查找附近</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@ApiOperation(&quot;通过地方查找附近&quot;)</span><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/georadiusByMember&quot;,method = RequestMethod.GET)</span><br>    <span class="hljs-keyword">public</span> GeoResults <span class="hljs-title function_">radiusByMember</span><span class="hljs-params">()</span> &#123;<br>        String member=<span class="hljs-string">&quot;天安门&quot;</span>;<br>        <span class="hljs-comment">//返回50条</span><br>        RedisGeoCommands.<span class="hljs-type">GeoRadiusCommandArgs</span> <span class="hljs-variable">args</span> <span class="hljs-operator">=</span> RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs().includeDistance().includeCoordinates().sortAscending().limit(<span class="hljs-number">10</span>);<br>        <span class="hljs-comment">//半径10公里内</span><br>        Distance distance=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Distance</span>(<span class="hljs-number">10</span>, Metrics.KILOMETERS);<br>        GeoResults&lt;RedisGeoCommands.GeoLocation&lt;String&gt;&gt; geoResults= <span class="hljs-built_in">this</span>.redisTemplate.opsForGeo().radius(CITY,member, distance,args);<br>        <span class="hljs-keyword">return</span> geoResults;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-布隆过滤器BloomFilter"><a href="#9-布隆过滤器BloomFilter" class="headerlink" title="9.布隆过滤器BloomFilter"></a>9.布隆过滤器BloomFilter</h2><p>面试题：</p>
+<p>现有50亿个电话号码，现有10万个电话号码，如何要快速准确的判断这些电话号码是否已经存在?</p>
+<p>1、通过数据库查询——-实现快速有点难。</p>
+<p>2、数据预放到内存集合中：50亿*8字节大约40G，内存太大了。</p>
+<h3 id="什么是布隆过滤器"><a href="#什么是布隆过滤器" class="headerlink" title="什么是布隆过滤器"></a>什么是布隆过滤器</h3><p>布隆过滤器（英语:Bloom Filter）是1970年由布隆提出的。</p>
+<p><font color=red><strong>它实际上是一个很长的二进制数组+一系列随机hash算法映射函数，主要用于判断一个元素是否在集合中。</strong></font></p>
+<p>通常我们会遇到很多要<code>判断一个元素是否在某个集合中的业务场景，</code>一般想到的是将集合中所有元素保存起来，然后通过比较确定。链表、树、散列表（又叫哈希表，Hash table）等等数据结构都是这种思路。</p>
+<p>但是随着集合中元素的增加，我们需要的存储空间也会呈现线性增长，最终达到瓶颈。同时检索速度也越来越慢，上述三种结构的检索时间复杂度分别为O(n),O(logn),O(1)。这个时候，布隆过滤器（Bloom Filter）就应运而生</p>
+<p><strong>一句话：由一个初值都为零的bit数组和多个哈希函数构成，用来快速判断某个数据是否存在</strong></p>
+<p>本质就是判断具体数据存不存在一个大的集合中</p>
+<p>布隆过滤器是一种类似set的数据结构大是统计结果不太准确</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120804.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214135758264"></p>
+<p>类似一个bit数组</p>
+<h3 id="特点和考点"><a href="#特点和考点" class="headerlink" title="特点和考点"></a>特点和考点</h3><p>高效地插入和查询，占用空间少，返回的结果是不确定性的。</p>
+<p><font color=red>一个元素如果判断结果为存在的时候元素不一定存在，但是判断结果为不存在的时候则一定不存在。</font></p>
+<p>布隆过滤器<code>可以添加元素,但是不能删除元素。</code></p>
+<p>因为删掉元素会导致误判率增加。</p>
+<p><code>误判只会发生在过滤器没有添加过的元素</code>，对于添加过的元素不会发生误判。</p>
+<p><code>有，很可能有</code></p>
+<p><code>无，肯定无</code></p>
+<p>使用时<code>最好不要让实际元素数量远大于初始化数量</code></p>
+<p>当实际元素数量超过初始化数量时，应该对布隆过滤器进行<code>重建</code>，重新分配一个size更大的过滤器，再将所有的历史元素批量add进行</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><h4 id="解决缓存穿透的问题"><a href="#解决缓存穿透的问题" class="headerlink" title="解决缓存穿透的问题"></a>解决缓存穿透的问题</h4><p><strong>缓存穿透是什么：</strong></p>
+<p>一般情况下，先查询缓存redis是否有该条数据，缓存中没有时，再查询数据库。</p>
+<p>当数据库也不存在该条数据时，每次查询都要访问数据库，这就是缓存穿透。</p>
+<p>缓存透带来的问题是，当有大量请求查询数据库不存在的数据时，就会给数据库带来压力，甚至会拖垮数据库。</p>
+<p><strong>可以使用布隆过滤器解决缓存穿透的问题：</strong></p>
+<p>把已存在数据的key存在布隆过滤器中，相当于redis前面挡着一个布隆过滤器。</p>
+<p>当有新的请求时，先到布隆过滤器中查询是否存在:</p>
+<p>如果布隆过滤器中不存在该条数据则直接返回;</p>
+<p>如果布隆过滤器中己存在，才去查询缓存redis，如果redis里没查询到则穿透到Mysql数据库</p>
+<h4 id="黑名单、白名单校验"><a href="#黑名单、白名单校验" class="headerlink" title="黑名单、白名单校验"></a>黑名单、白名单校验</h4><p>发现存在黑名单中的，就执行特定操作。比如：识别垃圾邮件，只要是邮箱在黑名单中的邮件，就识别为垃圾邮件。</p>
+<p>假设黑名单的数量是数以亿计的，存放起来就是非常耗费存储空间的，布隆过滤器则是一个较好的解决方案。</p>
+<p>把所有黑名单都放在布隆过滤器中，在收到邮件时，判断邮件地址是否在布隆过滤器中即可。</p>
+<h3 id="Java中的传统hash"><a href="#Java中的传统hash" class="headerlink" title="Java中的传统hash"></a>Java中的传统hash</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120805.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214135332966"></p>
+<h3 id="布隆过滤器实现原理和数据结构"><a href="#布隆过滤器实现原理和数据结构" class="headerlink" title="布隆过滤器实现原理和数据结构"></a>布隆过滤器实现原理和数据结构</h3><p>实质就是一个<code>大型位数组</code>和<code>几个不同的无偏hash函数</code>(无偏表示分布均匀)。</p>
+<p>由一个<code>初值都为零</code>的<code>bit数组</code>和多个个哈希函数构成，用来快速判断某个数据是否存在。</p>
+<p>但是跟HyperLogLog一样，它也一样有那么一点点不精确，也存在一定的<code>误判概率</code></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120806.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214135414892"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120807.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214135431235"></p>
+<h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><p>1、初始化</p>
+<p>2、添加</p>
+<p>3、判断是否存在</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120808.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214135459093"></p>
+<h3 id="为什么不删除"><a href="#为什么不删除" class="headerlink" title="为什么不删除"></a>为什么不删除</h3><p><strong>布隆过滤器误判率，为什么不要删除</strong></p>
+<p>布隆过滤器的误判是指多个输入经过哈希之后在相同的bit位置1了，这样就无法判断究竞是哪个输入产生的，</p>
+<p>因此<code>误判的根源在于相同的 bit位被多次映射且置1。</code></p>
+<p>这种情况也造成了布隆过滤器的删除问题，因为<code>布隆过滤器的每一个 bit并不是独占的，很有可能多个元素共享了某一位。</code></p>
+<p><code>如果我们直接删除这一位的话，会影响其他的元素</code></p>
+<p><strong>特性：</strong></p>
+<p>一个元素判断结果为没有时则一定没有，</p>
+<p>如果判断结果为存在的时候元素不一定存在。</p>
+<p>布隆过滤器可以添加元素，但是不能删除元素。因为删掉元素会导致误判率增加。</p>
+<h3 id="布谷鸟过滤器"><a href="#布谷鸟过滤器" class="headerlink" title="布谷鸟过滤器"></a>布谷鸟过滤器</h3><p>为了解决布隆过滤器不能删除元素的问题，布谷鸟过滤器横空出世。</p>
+<p>论文《Cuckoo Filter:Better Than Bloom》</p>
+<p>作者将布谷鸟过滤器和布隆过滤器进行了深入的对比。</p>
+<p>相比布谷鸟过滤器而言</p>
+<p>布隆过滤器有以下不足：查询性能弱、空间利用效率低、不支持反向操作（删除）以及不支持计数</p>
+<h2 id="10-缓存雪崩-穿透-击穿"><a href="#10-缓存雪崩-穿透-击穿" class="headerlink" title="10.缓存雪崩/穿透/击穿"></a>10.缓存雪崩/穿透/击穿</h2><h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><h4 id="什么是缓存雪崩"><a href="#什么是缓存雪崩" class="headerlink" title="什么是缓存雪崩"></a>什么是缓存雪崩</h4><p>发生：</p>
+<p>redis主机挂了，Redis 全盘崩溃</p>
+<p>比如缓存中数据同时过期</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>redis缓存集群实现高可用，主从+哨兵，Redis Cluster</p>
+<p>ehcache本地缓存＋Hystrix或者阿里sentinel限流&amp;降级</p>
+<p>开启Redis持久化机制aof/rdb，尽快恢复缓存集群</p>
+<img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120809.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214140955416" style="zoom:80%;" />
+
+<h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><h4 id="什么是缓存穿透"><a href="#什么是缓存穿透" class="headerlink" title="什么是缓存穿透"></a>什么是缓存穿透</h4><p><strong>是什么：</strong></p>
+<p>请求去查询头条记录，先redis后mysql发现都查询不到该条记录，但是请求每次都会打到数据库上面去，导致后台数据库压力暴增，这种现象我们称为缓存穿透</p>
+<p>这个redis变成了一个摆设。。。。。。</p>
+<p>简单来说是本来无一物，既不在Redis缓存中，也不在数据库中</p>
+<p><strong>危害：</strong></p>
+<p>第一次来查询后，一般我们有回写redis机制</p>
+<p>第二次来查询的时候redis就有了，偶尔出现穿透现象一般情况无关紧要</p>
+<h4 id="产生原因：黑客恶意攻击"><a href="#产生原因：黑客恶意攻击" class="headerlink" title="产生原因：黑客恶意攻击"></a>产生原因：黑客恶意攻击</h4><p>黑客会对你的系统选行攻击，拿一个不存在的id去查询数据会凶生大量的请求到数据库去查询。可能会致你的数据库由于压力过大而宕掉</p>
+<p>id相同打你系统</p>
+<ul>
+<li>第一次打到mysql，空对象缓存后第二次就返回null了，</li>
+</ul>
+<p>id不同打你系统</p>
+<ul>
+<li>避免mysql被攻击，不用再到数据库中去走一圈了，由于存在空对象缓存和缓存回写(看自己业务不限死)，redis中的无关紧要的key也会越写越多(<code>记得设置redis过期时间</code>)</li>
+</ul>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120810.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214144154839"></p>
+<h4 id="方案一：空对象缓存"><a href="#方案一：空对象缓存" class="headerlink" title="方案一：空对象缓存"></a>方案一：空对象缓存</h4><p>一旦发生缓存穿透，我们就可以针对查询的数据，在<code>Redis中缓存一个空值</code>或是和业务层协商确定的缺省值(例如，库存的缺省值可以设为0)。</p>
+<p>紧接着，应用发送的后续请求再进行查询时，就可以直接从Redis中读取空值或缺省值，返回给业务应用了，避免了把大量请求发送给数据库处理，保持了数据库的正常运行。</p>
+<h4 id="方案二：Guava中布隆过滤器"><a href="#方案二：Guava中布隆过滤器" class="headerlink" title="方案二：Guava中布隆过滤器"></a>方案二：Guava中布隆过滤器</h4><blockquote>
+<p><strong>布隆过滤器说明</strong></p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120811.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214153558803"></p>
+<p>Guava中布隆过滤器的实现算是比较权威的，Google出品</p>
+<p>所以实际项目中我们不需要手动实现个布隆过滤器</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- jrebloom布隆过滤器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.redislabs<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jrebloom<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>简单使用：</strong></p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120812.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214151632253"></p>
+<blockquote>
+<p><strong>使用默然参数构建布隆过滤器</strong></p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120813.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214151745904"></p>
+<blockquote>
+<p><strong>源码剖析：</strong></p>
+</blockquote>
+<p>我们首先往布隆过滤器里面加了 100w 条数据</p>
+<p>然后我们再拿 10w 个不再布隆过滤器里面的数据进行查询</p>
+<p>我们可以看到：</p>
+<p><code>Guava为我们创建了 700w 多个（7298440）坑位，默认的 容错率是 0.03 ，使用了 5个 hash算法  </code></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120814.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214144518693"></p>
+<blockquote>
+<p><strong>使用自定义参数构建布隆过滤器</strong></p>
+</blockquote>
+<p>我们首先往布隆过滤器里面加了 100w 条数据</p>
+<p>然后我们再拿 10w 个不再布隆过滤器里面的数据进行查询</p>
+<p>我们自己指定：<code>误判的参数为 0.01</code></p>
+<p>我们可以看到：</p>
+<p><code>Guava为我们创建了 900w 多个坑位，使用了 7个 hash算法  </code></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120815.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214143319169"></p>
+<blockquote>
+<p><strong>容错率是不是越低越好？</strong></p>
+</blockquote>
+<p>不是，容错率越低</p>
+<p>需要创建的坑位越多</p>
+<p>需要使用的hash算法越多</p>
+<p><code>效率越低</code></p>
+<h4 id="方案三：Redis布隆过滤器解决缓存穿透"><a href="#方案三：Redis布隆过滤器解决缓存穿透" class="headerlink" title="方案三：Redis布隆过滤器解决缓存穿透"></a>方案三：Redis布隆过滤器解决缓存穿透</h4><p>Guava缺点说明：</p>
+<p>Guava提供的布隆过滤器的实现还是很不错的（想要详细了解的可以看一下它的源码实现〉，但是它有一个重大的缺陷就是<code>只能单机使用</code>，而现在互联网一般都是<code>分布式的场景</code></p>
+<p>为了解决这个问题，我们就需要用到 <code>Redis 中的布隆过滤器</code>了</p>
+<blockquote>
+<p><strong>白名单过滤器</strong></p>
+</blockquote>
+<ul>
+<li>白名单架构说明</li>
+<li>误判问题，但是概率小可以接受;不能从布隆过滤器删除</li>
+<li><font color=red><strong>全部合法的key都需要放入过滤器+redis里面，不然数据就是返回null</strong></font></li>
+</ul>
+<blockquote>
+<p><strong>白名单架构说明</strong></p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120816.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214152423167"></p>
+<blockquote>
+<p>代码说明</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.redisson<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>redisson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.16.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120817.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="20211226183321"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120818.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="20211226183321 - 副本"></p>
+<blockquote>
+<p><strong>重要总结</strong></p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120819.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214153345709"></p>
+<blockquote>
+<p>家庭作业思考题：黑名单使用</p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120820.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214153411073"></p>
+<h4 id="Docker安装RedisBloom"><a href="#Docker安装RedisBloom" class="headerlink" title="Docker安装RedisBloom"></a>Docker安装RedisBloom</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120821.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214165453823"></p>
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p>业务上规避（提前关闭入口，更换数据，留下数据预热时间）</p>
+<p>lua脚本保证多条指令一起执行，并不能保证高并发</p>
+<h4 id="什么是缓存击穿"><a href="#什么是缓存击穿" class="headerlink" title="什么是缓存击穿"></a>什么是缓存击穿</h4><p><strong>是什么：</strong></p>
+<p><code>大量的请求同时查询一个key时</code>，<code>此时这个key正好失效了</code>，就会导致大量的请求都打到数据库</p>
+<p>简单说就是<code>热点key突然失效</code>了，暴打mysql</p>
+<p><strong>危害：</strong></p>
+<p>会造成某一时刻数据库请求量过大，压力剧增。</p>
+<p><strong>解决：</strong></p>
+<p>方案0：业务上规避</p>
+<p>方案1：</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120822.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214165708633"></p>
+<p>方案2：对于访问频繁的热点key，干脆就不设置过期时间</p>
+<p>方案3：互斥独占锁防止击穿，第一次课就讲解过</p>
+<p>多个线程同时去查询数据库的这条数据，那么我们可以在第一个查询数据的请求上使用一个互斥锁来锁住它。</p>
+<p>其他的线程走到这一步拿不到锁就等着，等第一个线程查询到了数据，然后做缓存。后面的线程进来发现已经有缓存了，就直接走缓存。</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120823.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214165848494"></p>
+<h4 id="案例：淘宝聚划算"><a href="#案例：淘宝聚划算" class="headerlink" title="案例：淘宝聚划算"></a>案例：淘宝聚划算</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120824.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214170219718"></p>
+<p>要求：高并发、实时</p>
+<h5 id="过程分析"><a href="#过程分析" class="headerlink" title="过程分析"></a>过程分析</h5><p>1、100%高并发，绝对不可以用mysql实现</p>
+<p>2、先把mysql里面参加活动的数据抽取进redis，一般采用定时器扫描来决定上线活动还是下线取消。</p>
+<p>3、支持分页功能，一页20条记录</p>
+<p>4、请大家思考，redis里面什么样子的数据类型支持上述功能?</p>
+<p><font color=red>zset主要多用于做排行榜</font></p>
+<p><font color=red>list主要多用于1对N的分页展现，分楼层、分阶段展现</font></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120825.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214170436760"></p>
+<h5 id="初步解决"><a href="#初步解决" class="headerlink" title="初步解决"></a>初步解决</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120826.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214170823068"></p>
+<h4 id="案例：淘宝聚划算【修复BUG】"><a href="#案例：淘宝聚划算【修复BUG】" class="headerlink" title="案例：淘宝聚划算【修复BUG】"></a>案例：淘宝聚划算【修复BUG】</h4><p>存在的问题：</p>
+<p>不是原子性的命令，存在热点缓存突然失效的隐患</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120827.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194712109"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120828.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194722911"></p>
+<h4 id="定时轮询、互斥更新、差异失效时间"><a href="#定时轮询、互斥更新、差异失效时间" class="headerlink" title="定时轮询、互斥更新、差异失效时间"></a>定时轮询、互斥更新、差异失效时间</h4><p>如何解决缓存击穿</p>
+<p>1、新建</p>
+<p>开辟两块缓存，主A从B，<code>先更新B再更新A</code>，严格照这个顺序。</p>
+<p>2、查询</p>
+<p>先查询<code>主缓存A</code>，如果A没有(消失或者失效了)再查询从缓存B。</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120829.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214170736896"></p>
+<h3 id="缓存内容总结"><a href="#缓存内容总结" class="headerlink" title="缓存内容总结"></a>缓存内容总结</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120830.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214164844817"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120831.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211214171131379"></p>
+<h2 id="11-分布式锁"><a href="#11-分布式锁" class="headerlink" title="11.分布式锁"></a>11.分布式锁</h2><h3 id="面试题引入"><a href="#面试题引入" class="headerlink" title="面试题引入"></a>面试题引入</h3><p>Redis除了拿来做缓存，你还见过基于Redis的什么用法?</p>
+<p>Redis做分布式锁的时候有需要注意的问题?</p>
+<p>如果是Redis是单点部署的，会带来什么问题? 那你准备怎么解决单点问题呢?</p>
+<p>集群模式下，比如主从模式，有没有什么问题呢?</p>
+<p>你知道Redis是怎么解决集群模式也不靠谱的问题的吗?</p>
+<p>那你简单的介绍一下Redlock吧？你简历上写redisson，你谈谈</p>
+<p>你觉得Redlock 有什么问题呢?</p>
+<p>Redis分布式锁如何续期？看门狗知道吗?</p>
+<h3 id="分布式锁理论"><a href="#分布式锁理论" class="headerlink" title="分布式锁理论"></a>分布式锁理论</h3><blockquote>
+<p> <strong>锁的种类：</strong></p>
+</blockquote>
+<p><code>单机版，同一个JVM虚拟机内</code>：synchnonized或者Lock接口</p>
+<p><code>分布式，不同个JVM虚拟机内</code>：单机的线程锁机制不再起作用，资源类在不同的服务器之间共享了。</p>
+<blockquote>
+<p> <strong>一个靠谱的分布式锁需要具备的条件和刚需：</strong></p>
+</blockquote>
+<p><code>1、独占性</code></p>
+<p>onlyone，任何时刻只能有且仅有一个线程持有</p>
+<p><code>2、高可用</code></p>
+<p>若redis集群环境下，不能因为某一个节点挂了而出现获取锁和释放锁失败的情况</p>
+<p><code>3、防死锁</code></p>
+<p>杜绝死锁，必须有超时控制机制或者撤销操作，有个兜底终止跳出方案</p>
+<p><code>4、不乱抢</code></p>
+<p>防止张冠李戴，不能私下unlock别人的锁，只能自己加锁自己释放。</p>
+<p><code>5、重入性</code></p>
+<p>同一个节点的同一个线程如果获得锁之后，它也可以再次获取这个锁。</p>
+<blockquote>
+<p> <strong>Redis中的分布式锁：</strong></p>
+</blockquote>
+<p><font color=red><strong>差评，setnx+expire不安全，两条命令非原子性的</strong></font></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120832.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215103425722"></p>
+<blockquote>
+<p><strong>使用场景：</strong></p>
+</blockquote>
+<p>多个服务间保证同一时刻同一时间段内同一用户只能有一个请求（防止关键业务出现并发攻击）</p>
+<p>Redis分布式锁比较正确的姿势是采用redisson这个客户端工具：</p>
+<p><code>天上飞的理念(RedLock)</code> 必然有 <code>落地的实现(Redisson)</code></p>
+<h3 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h3><p>CAP即：</p>
+<ul>
+<li>Consistency（一致性）</li>
+<li>Availability（可用性）</li>
+<li>Partition tolerance（分区容忍性）</li>
+</ul>
+<p>①<strong>一致性：</strong>对于客户端的每次读操作，要么读到的是最新的数据，要么读取失败。换句话说，一致性是站在分布式系统的角度，对访问本系统的客户端的一种承诺：要么我给您返回一个错误，要么我给你返回绝对一致的最新数据，不难看出，其强调的是数据正确。</p>
+<p>②<strong>可用性：</strong>任何客户端的请求都能得到响应数据，不会出现响应错误。换句话说，可用性是站在分布式系统的角度，对访问本系统的客户的另一种承诺：我一定会给您返回数据，不会给你返回错误，但不保证数据最新，强调的是不出错。</p>
+<p>③<strong>分区容忍性：</strong>由于分布式系统通过网络进行通信，网络是不可靠的。当任意数量的消息丢失或延迟到达时，系统仍会继续提供服务，不会挂掉。换句话说，分区容忍性是站在分布式系统的角度，对访问本系统的客户端的再一种承诺：我会一直运行，不管我的内部出现何种数据同步问题，强调的是不挂掉。</p>
+<p><font color=red><strong>对于不同的行业，选择应该不同：</strong></font></p>
+<p>互联网公司，要保证高并发，选择 AP，选择使用 Redis集群</p>
+<p><code>金融行业，</code>要保证数据一致性，选择 CP，选择使用 Zookeeper集群</p>
+<h4 id="Redis单机：CP"><a href="#Redis单机：CP" class="headerlink" title="Redis单机：CP"></a>Redis单机：CP</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120833.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215104315299"></p>
+<h4 id="Redis集群：AP"><a href="#Redis集群：AP" class="headerlink" title="Redis集群：AP"></a>Redis集群：AP</h4><p><font color=red><strong>异步复制</strong></font></p>
+<p>redis异步复制造成的锁丢失，</p>
+<p>比如：主节点没来的及把刚刚set进来这条数据给从节点，master就挂了，这个锁的信息就是丢失</p>
+<h4 id="Zookeeper集群：CP"><a href="#Zookeeper集群：CP" class="headerlink" title="Zookeeper集群：CP"></a>Zookeeper集群：CP</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120834.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215104505381"></p>
+<blockquote>
+<p>故障：</p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120835.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215104517923"></p>
+<h4 id="Eureka集群：AP"><a href="#Eureka集群：AP" class="headerlink" title="Eureka集群：AP"></a>Eureka集群：AP</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120836.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215104614642"></p>
+<h3 id="分布式锁演变过程"><a href="#分布式锁演变过程" class="headerlink" title="分布式锁演变过程"></a>分布式锁演变过程</h3><blockquote>
+<p>1.单机版没有加锁</p>
+</blockquote>
+<p>没有加锁，并发下数字不对，出现超卖现象</p>
+<p>思考：Synchronized 还是 Reentrantlock 还是都可以</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120837.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215103919197"></p>
+<blockquote>
+<ol start="2">
+<li>Nginx环境下，超卖问题</li>
+</ol>
+</blockquote>
+<p>分布式部署后，单机锁还是出现超卖现象，需要分布式锁</p>
+<blockquote>
+<p>8.lua脚本</p>
+</blockquote>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120838.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215104140181"></p>
+<blockquote>
+<p> <strong>代码演进过程【总结】</strong></p>
+</blockquote>
+<p>1、synchronized单机版oK，上分布式</p>
+<p>2、nginx分布式微服务单机锁不行</p>
+<p>3、取消单机锁，上Redis分布式锁setnx</p>
+<p>4、只加了锁，没有释放锁，出异常的话，可能无法释放锁,必须要在代码层面finally释放锁</p>
+<p>5、宕机了，部署了微服务代码层面根本没有走到finally这块，没办法保证解锁，这个key没有被删除，需要有lockKey的过期时间设定</p>
+<p>6、为redis的分布式锁key，增加过期时间，此外，还必须要setnx+过期时间必须同一行</p>
+<p>7、必须规定只能自己删除自己的锁,你不能把别人的锁删除了，防止张冠李戴，1删2，2删3</p>
+<p>8、Redis集群环境下，我们自己写的也不oK直接上RedLock之Redisson落地实现</p>
+<h3 id="分布式锁总结"><a href="#分布式锁总结" class="headerlink" title="分布式锁总结"></a>分布式锁总结</h3><p>三个重要的过程：加锁、解锁、超时</p>
+<p><strong>加锁：</strong></p>
+<p>加锁实际上就是在redis中，给Key键设置一个值，为避免死锁，并给定一个过期时间</p>
+<p><strong>解锁：</strong></p>
+<p>将Key键删除。但也不能乱删，不能说客户端1的请求将客户端2的锁给删除掉，只能自己删除自己的锁</p>
+<p>1.当代码块执行完之后，要保证锁能够释放 –&gt; lock.unlock</p>
+<p>2.当出现异常情况时，要保证锁能释放 –&gt; try-finally</p>
+<p>3.当系统宕机时，要保证锁能释放 –&gt; 设置过期时间</p>
+<p>4.要保证释放自己的锁，不能张冠李戴 –&gt; 判断</p>
+<p>5.要保证判读的操作和释放锁的操作是原子性的 –&gt; lua脚本</p>
+<p><strong>超时：</strong></p>
+<p>锁key要注意过期时间，不能长期占用</p>
+<p>单机模式中，一般都是用set/setnx+lua脚本搞定，想想它的缺点是什么?</p>
+<p>上面一般中小公司，不是高并发场景，是可以使用的。单机redis小业务也撑得住</p>
+<p>加锁关键逻辑：</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120839.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215110023125"></p>
+<p>解锁关键逻辑：</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120840.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215110034801"></p>
+<h3 id="多机环境下的问题"><a href="#多机环境下的问题" class="headerlink" title="多机环境下的问题"></a>多机环境下的问题</h3><p>基于setnx的分布式锁有什么缺点?</p>
+<p>redis之父提出了Redlock算法解决这个问题</p>
+<p>Redlock算法设计理念</p>
+<h4 id="基于setnx的分布式锁的缺点"><a href="#基于setnx的分布式锁的缺点" class="headerlink" title="基于setnx的分布式锁的缺点"></a>基于setnx的分布式锁的缺点</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120841.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215110134033"></p>
+<h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4><p>单机redis分布式锁不OK</p>
+<p>多机redis集群也不OK,master=slave模式行不通</p>
+<p><font color=red><strong>必须多机,但是不是master-slave模式,</strong></font></p>
+<p>而是3台或者5台机器，<code>全部是master</code></p>
+<p>不要异步同步出现锁丢失，而是<code>全部master</code>，一起获得</p>
+<h4 id="设计理念"><a href="#设计理念" class="headerlink" title="设计理念"></a>设计理念</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120842.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215110339693"></p>
+<h4 id="ReadLock容错率公式"><a href="#ReadLock容错率公式" class="headerlink" title="ReadLock容错率公式"></a>ReadLock容错率公式</h4><p>redis分布式锁，多主集群模式，它需要计算容错率</p>
+<p>N= 2X +1       <code>N(部署台数)=2X(宕机数)+1</code></p>
+<p>比如，我网络中死了1台机器，我要求还是OK的，可以用，请问，最多多主集群部署几台? <code>N=2*1+1 =3</code></p>
+<p>网络中死了2台机器,我要求还是OK的，可以用，请问，最多多主集群部署几台?  <code>N= 2*2+1=5</code></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120843.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215110427993"></p>
+<h4 id="案例：多机器分布式锁"><a href="#案例：多机器分布式锁" class="headerlink" title="案例：多机器分布式锁"></a>案例：多机器分布式锁</h4><p>开启服务</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120844.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215135408312"></p>
+<p>改pom</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120845.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215135436067"></p>
+<p>写配置</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120846.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215135455049"></p>
+<p>配置类</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120847.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194834708"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120848.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194849037"></p>
+<p>Controller</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120849.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215142611656"></p>
+<h4 id="缓存续命"><a href="#缓存续命" class="headerlink" title="缓存续命"></a>缓存续命</h4><p>还记得之前说过的缓存续命吗?</p>
+<p>Redis分布式锁过期了，但是业务逻辑还没处理完怎么办</p>
+<p><font color=red><strong>守护线程”续命”</strong></font></p>
+<ul>
+<li><code>额外起一个线程，定期检查线程是否还持有锁，如果有则延长过期时间。</code></li>
+<li>Redisson里面就实现了这个方案，使用<code>“看门狗”定期检查（每1/3的锁时间检查1次）</code>，<code>如果线程还持有锁，则刷新过期时间;</code></li>
+</ul>
+<p>在获取锁成功后，给锁加一个watchdog，watcadog会起一个<code>定时任务</code>，在锁没有被释放且快要过期的时候会续期</p>
+<p>缓存续命</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120850.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215142929666"></p>
+<p><font color=red><strong>watch dog自动延期机制：</strong></font></p>
+<p>客户端A加锁成功，就会启动一个watch dog看门狗，他是一个后台线程，会每隔10秒检查一下，如果客户端A还持有锁key，那么就会不断的延长锁key的生存时间，默认每次续命又从30秒新开始</p>
+<p>知不知道缓存续命：知道、看门狗</p>
+<p>默认时间是多少：看门狗检查锁的超时时间是30S、每隔10秒回检查一下客户端A是否还持有锁（30S 的 三分之一）</p>
+<h3 id="RedLock源码分析"><a href="#RedLock源码分析" class="headerlink" title="RedLock源码分析"></a>RedLock源码分析</h3><h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120851.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215143128373"></p>
+<h4 id="可重入性"><a href="#可重入性" class="headerlink" title="可重入性"></a>可重入性</h4><p>通过exists判断，如果锁不存在，则设置值和过期时间，加锁成功</p>
+<p>通过hexists判断，如果锁已存在，并且锁的是当前线程。则证明是重入锁，加锁成功</p>
+<p>如果锁已存在，但锁的不是当前线程，则证明有其他线程持有锁。</p>
+<p>返回当前锁的过期时间(代表了lockzzyy这个锁key的剩余时间)，加锁失败</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120852.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215143427692"></p>
+<h4 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120853.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215143440862"></p>
+<h2 id="12-Redis中过期键删除策略"><a href="#12-Redis中过期键删除策略" class="headerlink" title="12.Redis中过期键删除策略"></a>12.Redis中过期键删除策略</h2><p>redli过期键的删除策略</p>
+<p>如果一个键是过期的，那它<code>到了过期时间之后</code>是不是马上就从内存中被被删除呢??</p>
+<p>如果回答yes，立即删除,你自己走还是面试官送你?</p>
+<p>如果不是，那过期后到底什么时候被删除呢?是个什么操作?</p>
+<blockquote>
+<p>三种不同的删除策略</p>
+</blockquote>
+<p><code>立即删除：</code></p>
+<p>会占用CPU的时间，如果在CPU比较忙的时候，会产生大量的性能消耗，会影响数据的读写操作。</p>
+<p><code>惰性删除：</code></p>
+<p>数据到达过期时间，不做处理。等下次访问该数据时，如果未过期，返回数据，发现已过期，删除，返回不存在。</p>
+<p>看作是一种内存泄漏：无用的垃圾数据占用了大量的内存，而服务器却不会主动的删除他们</p>
+<p><code>定期删除：</code></p>
+<p>每隔一段时间执行一次删除过期键操作，并通过<code>限制删除操作执行的时长和频率</code>来减少删除操作对CPU时间的影响。</p>
+<p>采用随机抽取的方式</p>
+<blockquote>
+<p>上面两种方案都走极端：</p>
+</blockquote>
+<p>上述步骤都过堂了，还有漏洞吗?</p>
+<p>1、定期删除时，从来没有被抽查到<br>2、惰性删除时，也从来没有被点中使用过</p>
+<p>上述2步骤===&gt;大量过期的key堆积在内存中，导致redis内存空间紧张或者很快耗尽</p>
+<p>redis缓存淘汰策略登场</p>
+<h3 id="立即删除"><a href="#立即删除" class="headerlink" title="立即删除"></a>立即删除</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120854.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215151742867"></p>
+<h3 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120855.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215151804566"></p>
+<h3 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120856.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215151835596"></p>
+<h2 id="13-Redis中缓存淘汰策略"><a href="#13-Redis中缓存淘汰策略" class="headerlink" title="13.Redis中缓存淘汰策略"></a>13.Redis中缓存淘汰策略</h2><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120857.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215152300308"></p>
+<blockquote>
+<p>简单总结</p>
+</blockquote>
+<p>1、不会删除任何key：OOM</p>
+<p>2、删除马上要过期的key</p>
+<p>3、所有key：LRU</p>
+<p>4、设置了过期时间的key：LRU</p>
+<p>5、所有key：随机删除</p>
+<p>6、设置了过期时间的key：随机删除</p>
+<p>7、所有key：LFU</p>
+<p>8、设计了过期时间的的key：LFU</p>
+<p>LRU：Least Recently Used：最近最少被使用</p>
+<p>LFU：Least Frequently Used：最近使用次数最少</p>
+<h2 id="14-Redis中源码概述"><a href="#14-Redis中源码概述" class="headerlink" title="14.Redis中源码概述"></a>14.Redis中源码概述</h2><h3 id="从HelloWorld说起"><a href="#从HelloWorld说起" class="headerlink" title="从HelloWorld说起"></a>从HelloWorld说起</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120858.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161606567"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120859.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215152421259"></p>
+<h3 id="RedisObject说明"><a href="#RedisObject说明" class="headerlink" title="RedisObject说明"></a>RedisObject说明</h3><h4 id="RedisObject结构的作用"><a href="#RedisObject结构的作用" class="headerlink" title="RedisObject结构的作用"></a>RedisObject结构的作用</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120900.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161647870"></p>
+<h4 id="RedisObject各个字段的含义"><a href="#RedisObject各个字段的含义" class="headerlink" title="RedisObject各个字段的含义"></a>RedisObject各个字段的含义</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120901.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092201863"></p>
+<h4 id="案例：set-age-17"><a href="#案例：set-age-17" class="headerlink" title="案例：set age 17"></a>案例：set age 17</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120902.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161833491"></p>
+<h3 id="Redis数据结构和数据类型的关系"><a href="#Redis数据结构和数据类型的关系" class="headerlink" title="Redis数据结构和数据类型的关系"></a>Redis数据结构和数据类型的关系</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120903.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161924126"></p>
+<h3 id="Redis源码"><a href="#Redis源码" class="headerlink" title="Redis源码"></a>Redis源码</h3><h4 id="src源码包下的内容"><a href="#src源码包下的内容" class="headerlink" title="src源码包下的内容"></a>src源码包下的内容</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120904.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215162128895"></p>
+<h3 id="Redis中的KV键值对"><a href="#Redis中的KV键值对" class="headerlink" title="Redis中的KV键值对"></a>Redis中的KV键值对</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120905.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215162441763"></p>
+<h4 id="上帝视角"><a href="#上帝视角" class="headerlink" title="上帝视角"></a>上帝视角</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120906.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215162716163"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120907.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215162555005"></p>
+<h2 id="15-Redis中的数据类型详解"><a href="#15-Redis中的数据类型详解" class="headerlink" title="15.Redis中的数据类型详解"></a>15.Redis中的数据类型详解</h2><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120908.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161924126"></p>
+<h3 id="面试题反馈-1"><a href="#面试题反馈-1" class="headerlink" title="面试题反馈"></a>面试题反馈</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120909.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092734100"></p>
+<p>Redis内部会根据用户给的<code>不同键值而使用不同的编码格式</code>，<code>自适应地选择较优化的内部编码格式</code>，而这一切<code>对用户完全透明</code>！</p>
+<h3 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h3><p>同一个String，底层可以存三种数据结构</p>
+<h4 id="三大编码格式"><a href="#三大编码格式" class="headerlink" title="三大编码格式"></a>三大编码格式</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120910.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216091954305"></p>
+<p><strong>案例说明：</strong></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120911.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161452283"></p>
+<h4 id="C语言中的字符串"><a href="#C语言中的字符串" class="headerlink" title="C语言中的字符串"></a>C语言中的字符串</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120912.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161255259"></p>
+<h4 id="SDS简单动态字符串"><a href="#SDS简单动态字符串" class="headerlink" title="SDS简单动态字符串"></a>SDS简单动态字符串</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120913.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161336070"></p>
+<h4 id="Redis为什要设计SDS"><a href="#Redis为什要设计SDS" class="headerlink" title="Redis为什要设计SDS"></a>Redis为什要设计SDS</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120914.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211215161403770"></p>
+<h4 id="三大编码案例"><a href="#三大编码案例" class="headerlink" title="三大编码案例"></a>三大编码案例</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120915.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092347962"></p>
+<h5 id="INT编码格式"><a href="#INT编码格式" class="headerlink" title="INT编码格式"></a>INT编码格式</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120916.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092425635"></p>
+<h5 id="EMBSTR编码格式"><a href="#EMBSTR编码格式" class="headerlink" title="EMBSTR编码格式"></a>EMBSTR编码格式</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120917.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092501533"></p>
+<h5 id="RAW编码格式"><a href="#RAW编码格式" class="headerlink" title="RAW编码格式"></a>RAW编码格式</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120918.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092529465"></p>
+<h5 id="为什么会变成RAW"><a href="#为什么会变成RAW" class="headerlink" title="为什么会变成RAW"></a>为什么会变成RAW</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120919.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092559386"></p>
+<h5 id="逻辑转变图"><a href="#逻辑转变图" class="headerlink" title="逻辑转变图"></a>逻辑转变图</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120920.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092625294"></p>
+<h5 id="案例结论"><a href="#案例结论" class="headerlink" title="案例结论"></a>案例结论</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120921.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216092646512"></p>
+<h3 id="Hash类型"><a href="#Hash类型" class="headerlink" title="Hash类型"></a>Hash类型</h3><p><code>ziplist --&gt; hashlist</code></p>
+<p>hash-max-ziplist-entries：使用压缩列表保存时哈希集合中的<code>最大元素个数</code>。</p>
+<p>hash-max-ziplist-value：使用压缩列表保存时哈希集合中<code>单个元素的最大长度</code>。</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120922.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094934259"></p>
+<h4 id="案例说明"><a href="#案例说明" class="headerlink" title="案例说明"></a>案例说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120923.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216093154413"></p>
+<h4 id="Hash两种编码格式"><a href="#Hash两种编码格式" class="headerlink" title="Hash两种编码格式"></a>Hash两种编码格式</h4><p>1、哈希对象保存的键值对数量小于514个;</p>
+<p>2、所有的键值对的健和值的字符串长度都小于等于64byte (一个英文字母一个字节) 时用ziplist，反之用hashtable</p>
+<p>3、ziplist升级到hashtable可以，反过来降级不可以</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120924.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216093718806"></p>
+<h4 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120925.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216093818764"></p>
+<h5 id="ziplist-c"><a href="#ziplist-c" class="headerlink" title="ziplist.c"></a>ziplist.c</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120926.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216093934047"></p>
+<h5 id="ziplist源代码"><a href="#ziplist源代码" class="headerlink" title="ziplist源代码"></a>ziplist源代码</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120927.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094033274"></p>
+<h5 id="ziplist组成单元"><a href="#ziplist组成单元" class="headerlink" title="ziplist组成单元"></a>ziplist组成单元</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120928.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094114074"></p>
+<h5 id="ziplist存取情况"><a href="#ziplist存取情况" class="headerlink" title="ziplist存取情况"></a>ziplist存取情况</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120929.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094136617"></p>
+<h5 id="压缩列表节点构成"><a href="#压缩列表节点构成" class="headerlink" title="压缩列表节点构成"></a>压缩列表节点构成</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120930.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094248705"></p>
+<h5 id="zlentry实体结构解析"><a href="#zlentry实体结构解析" class="headerlink" title="zlentry实体结构解析"></a>zlentry实体结构解析</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120931.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094328871"></p>
+<h5 id="t-hash-c"><a href="#t-hash-c" class="headerlink" title="t_hash.c"></a>t_hash.c</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120932.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094438738"></p>
+<h5 id="OBJ-ENCODING-HT编码"><a href="#OBJ-ENCODING-HT编码" class="headerlink" title="OBJ_ENCODING_HT编码"></a>OBJ_ENCODING_HT编码</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120933.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094450429"></p>
+<h4 id="为什要有压缩链表"><a href="#为什要有压缩链表" class="headerlink" title="为什要有压缩链表"></a>为什要有压缩链表</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120934.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094159595"></p>
+<h3 id="list类型"><a href="#list类型" class="headerlink" title="list类型"></a>list类型</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120935.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094625559"></p>
+<h4 id="案例说明-1"><a href="#案例说明-1" class="headerlink" title="案例说明"></a>案例说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120936.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094637130"></p>
+<h4 id="qulicklist结构说明"><a href="#qulicklist结构说明" class="headerlink" title="qulicklist结构说明"></a>qulicklist结构说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120937.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094757592"></p>
+<h4 id="源码分析-1"><a href="#源码分析-1" class="headerlink" title="源码分析"></a>源码分析</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120938.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094850031"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120939.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216094918441"></p>
+<h3 id="Set类型"><a href="#Set类型" class="headerlink" title="Set类型"></a>Set类型</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120940.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216095023195"></p>
+<h4 id="案例说明-2"><a href="#案例说明-2" class="headerlink" title="案例说明"></a>案例说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120941.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216095039282"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120942.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216095721485"></p>
+<h3 id="Zset类型"><a href="#Zset类型" class="headerlink" title="Zset类型"></a>Zset类型</h3><p>ziplist –&gt;跳表</p>
+<h4 id="案例说明-3"><a href="#案例说明-3" class="headerlink" title="案例说明"></a>案例说明</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120943.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211216095135469"></p>
+<h4 id="源码分析-2"><a href="#源码分析-2" class="headerlink" title="源码分析"></a>源码分析</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120944.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217092436932"></p>
+<h3 id="跳表面试题"><a href="#跳表面试题" class="headerlink" title="跳表面试题"></a>跳表面试题</h3><h4 id="什么是跳表"><a href="#什么是跳表" class="headerlink" title="什么是跳表"></a>什么是跳表</h4><p>跳表是可以实现二分查找的有序链表</p>
+<p>skiplist是一种<code>以空间换取时间的结构</code>。</p>
+<p>由于链表，无法进行二分查找，因此借鉴数据库索引的思想，提取出链表中关键节点（索引），先在关键节点上查找，再进入下层链表查找。提取多层关键节点，就形成了跳跃表</p>
+<p>时间复杂度是O(logN)</p>
+<p>空间复杂度是O(N)</p>
+<h4 id="为什么会出现跳表"><a href="#为什么会出现跳表" class="headerlink" title="为什么会出现跳表"></a>为什么会出现跳表</h4><p>痛点</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120945.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217093516023"></p>
+<p>优化</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120946.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217093534433"></p>
+<h4 id="时间空间复杂度"><a href="#时间空间复杂度" class="headerlink" title="时间空间复杂度"></a>时间空间复杂度</h4><p>跳表的时间复杂度</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120947.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217093545869"></p>
+<p>跳表的空间复杂度</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120948.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217093554342"></p>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120949.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217093718065"></p>
+<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120950.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217092521573"></p>
+<h4 id="redis数据类型以及数据结构的关系"><a href="#redis数据类型以及数据结构的关系" class="headerlink" title="redis数据类型以及数据结构的关系"></a>redis数据类型以及数据结构的关系</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120951.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217092607044"></p>
+<h4 id="不同数据类型对应的底层数据结构"><a href="#不同数据类型对应的底层数据结构" class="headerlink" title="不同数据类型对应的底层数据结构"></a>不同数据类型对应的底层数据结构</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120952.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217092624715"></p>
+<h4 id="redis数据类型以及数据结构的时间复杂度"><a href="#redis数据类型以及数据结构的时间复杂度" class="headerlink" title="redis数据类型以及数据结构的时间复杂度"></a>redis数据类型以及数据结构的时间复杂度</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120953.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217092632993"></p>
+<h3 id="小总结-1"><a href="#小总结-1" class="headerlink" title="小总结"></a>小总结</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120954.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211224135737464"></p>
+<p>在低版本的Redis中，list采用的底层数据结构是ziplist+linkedList;</p>
+<p>高版本的Redis中底层数据结构是quicklist(它替换了ziplist+linkedList)，而quicklist也用到了ziplist</p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120955.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211224140350885"></p>
+<h2 id="16-cannal入门概述"><a href="#16-cannal入门概述" class="headerlink" title="16.cannal入门概述"></a>16.cannal入门概述</h2><h3 id="什么是canal"><a href="#什么是canal" class="headerlink" title="什么是canal"></a>什么是canal</h3><p><font color=red><strong>思考：主流技术栈的演变趋势</strong></font></p>
+<p><strong>主流：mysql+hive+hbase</strong></p>
+<p><strong>新未来：clickhouse + doris</strong></p>
+<h4 id="面试题反馈-2"><a href="#面试题反馈-2" class="headerlink" title="面试题反馈"></a>面试题反馈</h4><p>你只要用缓存，就可能会涉及到缓存与数据库双存储双写，你只要是双写，就一定会有数据一致性的问题，那么你如何解决一致性问题?</p>
+<p>双写一致性，你先动缓存redis还是数据库mysql哪一个? why?</p>
+<h4 id="什么是canal-1"><a href="#什么是canal-1" class="headerlink" title="什么是canal"></a>什么是canal</h4><p>canal [ke’nael]，中文翻译为水道/管道/沟渠/运河，主要用途是<code>用于MySQL</code>数据库<code>增量日志数据的订阅、消费和解析</code>，是阿里巴巴开发并开源的，采用Java语言开发;</p>
+<p>历史背景是早期阿里巴巴因为杭州和美国双机房部署，存在跨机房数据同步的业务需求，实现方式主要是基于业务trgger (触发器）获取增量变更。从2010年开始，阿里巴巴逐步尝试采用解析数据库日志获取增量变更进行同步，由此衍生出了canal项目</p>
+<p><code>效果：mysql改了，被canal组件捕获，立刻完整一致的将写操作，同步给我们的redis缓存源</code></p>
+<p>cannal<code>不仅仅能同步给redis缓存源</code>，在业务代码中，也可以同步给 MQ、MongoDB等</p>
+<h4 id="cannal能干嘛"><a href="#cannal能干嘛" class="headerlink" title="cannal能干嘛"></a>cannal能干嘛</h4><p>数据库镜像</p>
+<p>数据库实时备份</p>
+<p>索引构建和实时维护(拆分异构索引、倒排索引等)</p>
+<p>业务cache 刷新</p>
+<p>带业务逻辑的增量数据处理</p>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120956.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217094431364"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120957.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217094455586"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120958.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217094503853"></p>
+<h3 id="配置使用-案例"><a href="#配置使用-案例" class="headerlink" title="配置使用/案例"></a>配置使用/案例</h3><h4 id="mysql配置"><a href="#mysql配置" class="headerlink" title="mysql配置"></a>mysql配置</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226120959.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194245107"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121000.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194239906"></p>
+<h4 id="canal服务端配置"><a href="#canal服务端配置" class="headerlink" title="canal服务端配置"></a>canal服务端配置</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121001.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220095210306"></p>
+<h4 id="cannal客户端配置"><a href="#cannal客户端配置" class="headerlink" title="cannal客户端配置"></a>cannal客户端配置</h4><p><font color=red><strong>编写业务代码</strong></font></p>
+<h2 id="17-双写一致性工程案例"><a href="#17-双写一致性工程案例" class="headerlink" title="17.双写一致性工程案例"></a>17.双写一致性工程案例</h2><h3 id="微信抢红包案例"><a href="#微信抢红包案例" class="headerlink" title="微信抢红包案例"></a>微信抢红包案例</h3><h4 id="微信抢红包业务分析"><a href="#微信抢红包业务分析" class="headerlink" title="微信抢红包业务分析"></a>微信抢红包业务分析</h4><h4 id="微信抢红包案例总结"><a href="#微信抢红包案例总结" class="headerlink" title="微信抢红包案例总结"></a>微信抢红包案例总结</h4><h2 id="18-双写一致性更新策略"><a href="#18-双写一致性更新策略" class="headerlink" title="18.双写一致性更新策略"></a>18.双写一致性更新策略</h2><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121002.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217095500574"></p>
+<blockquote>
+<p><strong>几种更新策略：</strong></p>
+</blockquote>
+<p>0、挂牌报错，凌晨升级：单线程，这样重量级的数据操作最好不要多线程</p>
+<p>1、先更新数据库，再更新缓存</p>
+<p>2、先删除缓存，再更新数据库</p>
+<p>3、先更新数据库，再删除缓存</p>
+<p>4、不许问：先更新缓存，再更新数据库这种策略</p>
+<h3 id="目的：最终一致性"><a href="#目的：最终一致性" class="headerlink" title="目的：最终一致性"></a>目的：最终一致性</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121003.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217095623337"></p>
+<h3 id="先更新数据库，再更新缓存"><a href="#先更新数据库，再更新缓存" class="headerlink" title="先更新数据库，再更新缓存"></a>先更新数据库，再更新缓存</h3><h3 id="先删除缓存，再更新数据库"><a href="#先删除缓存，再更新数据库" class="headerlink" title="先删除缓存，再更新数据库"></a>先删除缓存，再更新数据库</h3><p>低并发，写回旧值</p>
+<p>高并发，缓存击穿</p>
+<h4 id="异常问题"><a href="#异常问题" class="headerlink" title="异常问题"></a>异常问题</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121004.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217095938031"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121005.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217100028808"></p>
+<h4 id="异常总结"><a href="#异常总结" class="headerlink" title="异常总结"></a>异常总结</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121006.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217100044242"></p>
+<h4 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="复习阿里缓存击穿方案"><a href="#复习阿里缓存击穿方案" class="headerlink" title="复习阿里缓存击穿方案"></a>复习阿里缓存击穿方案</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121007.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217100159765"></p>
+<h5 id="延时双删策略"><a href="#延时双删策略" class="headerlink" title="延时双删策略"></a>延时双删策略</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121008.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217100232534"></p>
+<h5 id="延时双删面试题"><a href="#延时双删面试题" class="headerlink" title="延时双删面试题"></a>延时双删面试题</h5><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121009.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217100317217"></p>
+<h3 id="先更新数据库，再删除缓存"><a href="#先更新数据库，再删除缓存" class="headerlink" title="先更新数据库，再删除缓存"></a>先更新数据库，再删除缓存</h3><h4 id="异常问题-1"><a href="#异常问题-1" class="headerlink" title="异常问题"></a>异常问题</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121010.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217101033544"></p>
+<h4 id="业务指导思想"><a href="#业务指导思想" class="headerlink" title="业务指导思想"></a>业务指导思想</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121011.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217101209601"></p>
+<h4 id="解决方案-3"><a href="#解决方案-3" class="headerlink" title="解决方案"></a>解决方案</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121012.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217101234824"></p>
+<h3 id="不许问：先更新缓存，再更新数据库这种策略"><a href="#不许问：先更新缓存，再更新数据库这种策略" class="headerlink" title="不许问：先更新缓存，再更新数据库这种策略"></a>不许问：先更新缓存，再更新数据库这种策略</h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h4 id="最终目的"><a href="#最终目的" class="headerlink" title="最终目的"></a>最终目的</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121013.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217101308108"></p>
+<h4 id="方案2和3的取舍"><a href="#方案2和3的取舍" class="headerlink" title="方案2和3的取舍"></a>方案2和3的取舍</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121014.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217101328751"></p>
+<h4 id="一图总结"><a href="#一图总结" class="headerlink" title="一图总结"></a>一图总结</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121015.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211217101351173"></p>
+<h2 id="19-I-O多路复用模型"><a href="#19-I-O多路复用模型" class="headerlink" title="19.I/O多路复用模型"></a>19.I/O多路复用模型</h2><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121016.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220095649708"></p>
+<h3 id="Redis单线程如何处理并发客户端连接"><a href="#Redis单线程如何处理并发客户端连接" class="headerlink" title="Redis单线程如何处理并发客户端连接"></a>Redis单线程如何处理并发客户端连接</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121017.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100000938"></p>
+<h3 id="参考Redis设计与实现"><a href="#参考Redis设计与实现" class="headerlink" title="参考Redis设计与实现"></a>参考Redis设计与实现</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121018.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100119892"></p>
+<h3 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121019.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="20211231170055"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121020.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="20211231170055 - 副本"></p>
+<h3 id="Unix中的五种IO编程模型"><a href="#Unix中的五种IO编程模型" class="headerlink" title="Unix中的五种IO编程模型"></a>Unix中的五种IO编程模型</h3><h4 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121021.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="20211226183755"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121022.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="20211226183755 - 副本"></p>
+<h4 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121023.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100259829"></p>
+<h4 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121024.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100400099"></p>
+<h4 id="五种IO模型总结"><a href="#五种IO模型总结" class="headerlink" title="五种IO模型总结"></a>五种IO模型总结</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121025.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100710792"></p>
+<h3 id="IO多路复用-1"><a href="#IO多路复用-1" class="headerlink" title="IO多路复用"></a>IO多路复用</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121026.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100801144"></p>
+<h4 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121027.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100816226"></p>
+<h4 id="FileDescriptor和说人话"><a href="#FileDescriptor和说人话" class="headerlink" title="FileDescriptor和说人话"></a>FileDescriptor和说人话</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121028.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100845977"></p>
+<h4 id="Redis单线程模型"><a href="#Redis单线程模型" class="headerlink" title="Redis单线程模型"></a>Redis单线程模型</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121029.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220100934897"></p>
+<h4 id="Reactor设计模式"><a href="#Reactor设计模式" class="headerlink" title="Reactor设计模式"></a>Reactor设计模式</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121030.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101017787"></p>
+<h4 id="Redis为什么是单线程"><a href="#Redis为什么是单线程" class="headerlink" title="Redis为什么是单线程"></a>Redis为什么是单线程</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121031.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101048287"></p>
+<h2 id="20-I-O多路复用具体实现"><a href="#20-I-O多路复用具体实现" class="headerlink" title="20.I/O多路复用具体实现"></a>20.I/O多路复用具体实现</h2><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121032.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101215537"></p>
+<h3 id="select方法"><a href="#select方法" class="headerlink" title="select方法"></a>select方法</h3><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121033.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194457995"></p>
+<p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121034.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20220110194505372"></p>
+<h4 id="poll方法"><a href="#poll方法" class="headerlink" title="poll方法"></a>poll方法</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121035.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101317194"></p>
+<h4 id="epoll方法"><a href="#epoll方法" class="headerlink" title="epoll方法"></a>epoll方法</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121036.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101416232"></p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121037.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101444623"></p>
+<h4 id="三个方法对比"><a href="#三个方法对比" class="headerlink" title="三个方法对比"></a>三个方法对比</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121038.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101503713"></p>
+<h4 id="为什么三个都保留"><a href="#为什么三个都保留" class="headerlink" title="为什么三个都保留"></a>为什么三个都保留</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121039.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211220101543466"></p>
+<h2 id="21-课程总结-感悟"><a href="#21-课程总结-感悟" class="headerlink" title="21.课程总结/感悟"></a>21.课程总结/感悟</h2><h2 id="以下是对Redis不熟悉的内容补充"><a href="#以下是对Redis不熟悉的内容补充" class="headerlink" title="==以下是对Redis不熟悉的内容补充"></a>==以下是对Redis不熟悉的内容补充</h2><h2 id="22-事务"><a href="#22-事务" class="headerlink" title="22.事务"></a>22.事务</h2><p><a target="_blank" rel="noopener" href="http://www.redis.cn/topics/transactions.html">事务官方文档</a></p>
+<h3 id="是什么-能干嘛"><a href="#是什么-能干嘛" class="headerlink" title="是什么/能干嘛"></a>是什么/能干嘛</h3><p>是什么：可以一次执行多个命令，本质是一组命令的集合。一个事务中的所有命令都会序列化，按顺序地串行化执行而不会被其它命令插入，不许加塞。</p>
+<p>能干嘛：一个队列中，一次性、顺序性、排他性的执行一系列命令。</p>
+<h3 id="怎么玩"><a href="#怎么玩" class="headerlink" title="怎么玩"></a>怎么玩</h3><h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DISCARD</td>
+<td>取消事务，放弃执行事务块内的所有命令。</td>
+</tr>
+<tr>
+<td>EXEC</td>
+<td>执行所有事务块内的命令。</td>
+</tr>
+<tr>
+<td>MULTI</td>
+<td>标记一个事务块的开始。</td>
+</tr>
+<tr>
+<td>UNWATCH</td>
+<td>取消 WATCH 命令对所有 key 的监视。</td>
+</tr>
+<tr>
+<td>WATCH key [key …]</td>
+<td>监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。</td>
+</tr>
+</tbody></table>
+<h4 id="Case"><a href="#Case" class="headerlink" title="Case"></a>Case</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121040.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211224142020039"></p>
+<h4 id="watch监控"><a href="#watch监控" class="headerlink" title="watch监控"></a>watch监控</h4><p>WATCH 使得 EXEC 命令需要有条件地执行： 事务只能在所有被监视键都没有被修改的前提下执行， 如果这个前提不能满足的话，事务就不会被执行。<a target="_blank" rel="noopener" href="http://www.redis.cn/topics/transactions.html">link</a></p>
+<blockquote>
+<p>悲观锁/乐观锁/CAS(Check And Set)</p>
+</blockquote>
+<ul>
+<li>悲观锁<ul>
+<li>悲观锁(Pessimistic Lock), 顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。</li>
+</ul>
+</li>
+<li>乐观锁<ul>
+<li>乐观锁(Optimistic Lock), 顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。乐观锁适用于多读的应用类型，这样可以提高吞吐量。</li>
+<li>乐观锁策略:提交版本必须大于记录当前版本才能执行更新</li>
+</ul>
+</li>
+<li>CAS</li>
+</ul>
+<h4 id="信用卡可用余额和欠额"><a href="#信用卡可用余额和欠额" class="headerlink" title="信用卡可用余额和欠额"></a>信用卡可用余额和欠额</h4><p><img   class="lazyload" data-original="https://gnotepng.oss-cn-shanghai.aliyuncs.com/20230226121041.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20211224142800807"></p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>Watch指令，类似乐观锁，事务提交时，如果Key的值已被别的客户端改变， 比如某个list已被别的客户端push/pop过了，整个事务队列都不会被执行</li>
+<li>通过WATCH命令在事务执行之前监控了多个Keys，倘若在WATCH之后有任何Key的值发生了变化， EXEC命令执行的事务都将被放弃，同时返回Nullmulti-bulk应答以通知调用者事务执行失败</li>
+</ul>
+<h3 id="总结：三阶段-三特性"><a href="#总结：三阶段-三特性" class="headerlink" title="总结：三阶段/三特性"></a>总结：三阶段/三特性</h3><h4 id="3阶段"><a href="#3阶段" class="headerlink" title="3阶段"></a>3阶段</h4><ul>
+<li>开启：以MULTI开始一个事务</li>
+<li>入队：将多个命令入队到事务中，接到这些命令并不会立即执行，而是放到等待执行的事务队列里面</li>
+<li>执行：由EXEC命令触发事务</li>
+</ul>
+<h4 id="3特性"><a href="#3特性" class="headerlink" title="3特性"></a>3特性</h4><ul>
+<li><strong>单独的隔离操作</strong>：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。</li>
+<li><strong>没有隔离级别的概念</strong>：队列中的命令没有提交之前都不会实际的被执行，因为事务提交前任何指令都不会被实际执行， 也就不存在”事务内的查询要看到事务里的更新，在事务外查询不能看到”这个让人万分头痛的问题</li>
+<li><strong>不保证原子性</strong>：redis同一个事务中如果有一条命令执行失败，其后的命令仍然会被执行，没有回滚</li>
+</ul>
+<p>不遵循传统的ACID中的AI</p>
+<h2 id="23-消息订阅发布简介"><a href="#23-消息订阅发布简介" class="headerlink" title="23.消息订阅发布简介"></a>23.消息订阅发布简介</h2><p><strong>用观察者模式理解学习</strong></p>
+<p>进程间的一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。</p>
+<p>下图展示了频道 channel1 ， 以及订阅这个频道的三个客户端 —— client2 、 client5 和 client1 之间的关系：</p>
+<p><img   class="lazyload" data-original="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9naXRlZS5jb20vamFsbGVua3dvbmcvTGVhcm5SZWRpcy9yYXcvbWFzdGVyL2ltYWdlLzMxLnBuZw?x-oss-process=image/format,png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+<p>当有新消息通过 PUBLISH 命令发送给频道 channel1 时， 这个消息就会被发送给订阅它的三个客户端：</p>
+<p><img   class="lazyload" data-original="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9naXRlZS5jb20vamFsbGVua3dvbmcvTGVhcm5SZWRpcy9yYXcvbWFzdGVyL2ltYWdlLzMyLnBuZw?x-oss-process=image/format,png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+<h3 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PSUBSCRIBE pattern [pattern …]</td>
+<td>订阅一个或多个符合给定模式的频道。</td>
+</tr>
+<tr>
+<td>PUBSUB subcommand [argument [argument …]]</td>
+<td>查看订阅与发布系统状态。</td>
+</tr>
+<tr>
+<td>PUBLISH channel message</td>
+<td>将信息发送到指定的频道。</td>
+</tr>
+<tr>
+<td>PUNSUBSCRIBE [pattern [pattern …]]</td>
+<td>退订所有给定模式的频道。</td>
+</tr>
+<tr>
+<td>SUBSCRIBE channel [channel …]</td>
+<td>订阅给定的一个或多个频道的信息。</td>
+</tr>
+<tr>
+<td>UNSUBSCRIBE [channel [channel …]]</td>
+<td>指退订给定的频道。</td>
+</tr>
+</tbody></table>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>以下实例演示了发布订阅是如何工作的。在我们实例中我们创建了订阅频道名为 redisChat:</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gams">redis <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">6379</span>&gt; SUBSCRIBE redisChat<br><br><span class="hljs-function"><span class="hljs-title">Reading</span></span> messages... (press Ctrl-C to quit)<br><span class="hljs-number">1</span>) <span class="hljs-string">&quot;subscribe&quot;</span><br><span class="hljs-number">2</span>) <span class="hljs-string">&quot;redisChat&quot;</span><br><span class="hljs-number">3</span>) (<span class="hljs-keyword">integer</span>) <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>现在，我们先重新开启个 redis 客户端，然后在同一个频道 redisChat 发布两次消息，订阅者就能接收到消息。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">redis</span> <span class="hljs-number">127.0.0.1:6379</span>&gt; PUBLISH redisChat <span class="hljs-string">&quot;Redis is a great caching technique&quot;</span><br><br>(integer) <span class="hljs-number">1</span><br><br>redis <span class="hljs-number">127.0.0.1:6379</span>&gt; PUBLISH redisChat <span class="hljs-string">&quot;Learn redis by runoob.com&quot;</span><br><br>(integer) <span class="hljs-number">1</span><br><br><span class="hljs-comment"># 订阅者的客户端会显示如下消息</span><br><span class="hljs-number">1</span>) <span class="hljs-string">&quot;message&quot;</span><br><span class="hljs-number">2</span>) <span class="hljs-string">&quot;redisChat&quot;</span><br><span class="hljs-number">3</span>) <span class="hljs-string">&quot;Redis is a great caching technique&quot;</span><br><span class="hljs-number">1</span>) <span class="hljs-string">&quot;message&quot;</span><br><span class="hljs-number">2</span>) <span class="hljs-string">&quot;redisChat&quot;</span><br><span class="hljs-number">3</span>) <span class="hljs-string">&quot;Learn redis by runoob.com&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>订阅多个通配符 *</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haxe">PSUBSCRIBE <span class="hljs-keyword">new</span><span class="hljs-type"></span>*<br></code></pre></td></tr></table></figure>
+
+<p>收取消息，</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haxe">PUBLISH <span class="hljs-keyword">new</span><span class="hljs-type">1</span> redis2015<br></code></pre></td></tr></table></figure>
+
+<h2 id="24-Jedis实现事务"><a href="#24-Jedis实现事务" class="headerlink" title="24.Jedis实现事务"></a>24.Jedis实现事务</h2><h3 id="日常"><a href="#日常" class="headerlink" title="日常"></a>日常</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> redis.clients.jedis.Jedis;<br><span class="hljs-keyword">import</span> redis.clients.jedis.Response;<br><span class="hljs-keyword">import</span> redis.clients.jedis.Transaction;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test03</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>		<span class="hljs-type">Jedis</span> <span class="hljs-variable">jedis</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Jedis</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>, <span class="hljs-number">6379</span>);<br><br>		<span class="hljs-comment">// 监控key，如果该动了事务就被放弃</span><br>		<span class="hljs-comment">/*</span><br><span class="hljs-comment">		 * 3 jedis.watch(&quot;serialNum&quot;); jedis.set(&quot;serialNum&quot;,&quot;s#####################&quot;);</span><br><span class="hljs-comment">		 * jedis.unwatch();</span><br><span class="hljs-comment">		 */</span><br><br>		<span class="hljs-type">Transaction</span> <span class="hljs-variable">transaction</span> <span class="hljs-operator">=</span> jedis.multi();<span class="hljs-comment">// 被当作一个命令进行执行</span><br>		Response&lt;String&gt; response = transaction.get(<span class="hljs-string">&quot;serialNum&quot;</span>);<br>		transaction.set(<span class="hljs-string">&quot;serialNum&quot;</span>, <span class="hljs-string">&quot;s002&quot;</span>);<br>		response = transaction.get(<span class="hljs-string">&quot;serialNum&quot;</span>);<br>		transaction.lpush(<span class="hljs-string">&quot;list3&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>);<br>		transaction.lpush(<span class="hljs-string">&quot;list3&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>);<br>		transaction.lpush(<span class="hljs-string">&quot;list3&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>);<br><br>		transaction.exec();<br>		<span class="hljs-comment">// 2 transaction.discard();</span><br>		System.out.println(<span class="hljs-string">&quot;serialNum***********&quot;</span> + response.get());<br><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="加锁-1"><a href="#加锁-1" class="headerlink" title="加锁"></a>加锁</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> redis.clients.jedis.Jedis;<br><span class="hljs-keyword">import</span> redis.clients.jedis.Transaction;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestTX</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">transMethod</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>		<span class="hljs-type">Jedis</span> <span class="hljs-variable">jedis</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Jedis</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>, <span class="hljs-number">6379</span>);<br>		<span class="hljs-type">int</span> balance;<span class="hljs-comment">// 可用余额</span><br>		<span class="hljs-type">int</span> debt;<span class="hljs-comment">// 欠额</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">amtToSubtract</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<span class="hljs-comment">// 实刷额度</span><br><br>		jedis.watch(<span class="hljs-string">&quot;balance&quot;</span>);<br>		<span class="hljs-comment">// jedis.set(&quot;balance&quot;,&quot;5&quot;);//此句不该出现，讲课方便。模拟其他程序已经修改了该条目</span><br>		Thread.sleep(<span class="hljs-number">7000</span>);<br>		balance = Integer.parseInt(jedis.get(<span class="hljs-string">&quot;balance&quot;</span>));<br>		<span class="hljs-keyword">if</span> (balance &lt; amtToSubtract) &#123;<br>			jedis.unwatch();<br>			System.out.println(<span class="hljs-string">&quot;modify&quot;</span>);<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>		&#125; <span class="hljs-keyword">else</span> &#123;<br>			System.out.println(<span class="hljs-string">&quot;***********transaction&quot;</span>);<br>			<span class="hljs-type">Transaction</span> <span class="hljs-variable">transaction</span> <span class="hljs-operator">=</span> jedis.multi();<br>			transaction.decrBy(<span class="hljs-string">&quot;balance&quot;</span>, amtToSubtract);<br>			transaction.incrBy(<span class="hljs-string">&quot;debt&quot;</span>, amtToSubtract);<br>			transaction.exec();<br>			balance = Integer.parseInt(jedis.get(<span class="hljs-string">&quot;balance&quot;</span>));<br>			debt = Integer.parseInt(jedis.get(<span class="hljs-string">&quot;debt&quot;</span>));<br><br>			System.out.println(<span class="hljs-string">&quot;*******&quot;</span> + balance);<br>			System.out.println(<span class="hljs-string">&quot;*******&quot;</span> + debt);<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * 通俗点讲，watch命令就是标记一个键，如果标记了一个键， 在提交事务前如果该键被别人修改过，那事务就会失败，这种情况通常可以在程序中 重新再尝试一次。</span><br><span class="hljs-comment">	 * 首先标记了键balance，然后检查余额是否足够，不足就取消标记，并不做扣减； 足够的话，就启动事务进行更新操作，</span><br><span class="hljs-comment">	 * 如果在此期间键balance被其它人修改， 那在提交事务（执行exec）时就会报错， 程序中通常可以捕获这类错误再重新执行一次，直到成功。</span><br><span class="hljs-comment">	 * </span><br><span class="hljs-comment">	 * <span class="hljs-doctag">@throws</span> InterruptedException</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>		<span class="hljs-type">TestTX</span> <span class="hljs-variable">test</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TestTX</span>();<br>		<span class="hljs-type">boolean</span> <span class="hljs-variable">retValue</span> <span class="hljs-operator">=</span> test.transMethod();<br>		System.out.println(<span class="hljs-string">&quot;main retValue-------: &quot;</span> + retValue);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>John Doe</li>
+    <li><strong>本文链接：</strong><a href="https://kygeng.github.io/kygeng/2022/02/23/%E5%A4%A7%E5%8E%82%E5%AD%A6%E9%99%A2%EF%BC%9ARedis6/index.html" title="https:&#x2F;&#x2F;kygeng.github.io&#x2F;kygeng&#x2F;2022&#x2F;02&#x2F;23&#x2F;%E5%A4%A7%E5%8E%82%E5%AD%A6%E9%99%A2%EF%BC%9ARedis6&#x2F;index.html">https:&#x2F;&#x2F;kygeng.github.io&#x2F;kygeng&#x2F;2022&#x2F;02&#x2F;23&#x2F;%E5%A4%A7%E5%8E%82%E5%AD%A6%E9%99%A2%EF%BC%9ARedis6&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/kygeng/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/kygeng/tags/Redis6/" rel="tag">Redis6</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/kygeng/2022/02/25/%E5%A4%A7%E5%8E%82%E5%AD%A6%E9%99%A2%EF%BC%9AJUC%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="iconfont iconleft"></i>Java并发编程</a>
+    <a href="/kygeng/2022/01/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%BE%8E03_%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">设计模式03-行为型模式<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E5%8E%82%E5%AD%A6%E9%99%A2-Redis6"><span class="toc-text">大厂学院-Redis6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AF%BE%E7%A8%8B%E8%AF%B4%E6%98%8E"><span class="toc-text">1.课程说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Redis%E5%AE%98%E7%BD%91%E6%9F%A5%E9%98%85%E5%92%8C%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-text">2.Redis官网查阅和基本配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Redis%E5%8D%95%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">3.Redis单线程与多线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis3%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="toc-text">Redis3单线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis4%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">Redis4多线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A4%9A%E7%BA%BF%E7%A8%8BI-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E7%AE%80%E4%BB%8B"><span class="toc-text">4.多线程I&#x2F;O多路复用简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E7%9A%84%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88"><span class="toc-text">Redis的性能瓶颈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unix%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B"><span class="toc-text">Unix编程中的五种IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E6%98%AF%E5%8D%95%E7%BA%BF%E7%A8%8B%E8%BF%98%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9F"><span class="toc-text">Redis是单线程还是多线程？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%BC%80%E5%90%AFRedis6%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">5.开启Redis6的多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Redis%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B"><span class="toc-text">6.Redis简单案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="toc-text">增删改查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="toc-text">代码优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%9F%E9%89%B4%E6%80%9D%E6%83%B3"><span class="toc-text">借鉴思想</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Redis%E4%BA%94%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">7.Redis五种数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BAPI"><span class="toc-text">数据类型API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B%EF%BC%9A%E5%BE%AE%E4%BF%A1%E7%82%B9%E8%B5%9E"><span class="toc-text">综合案例：微信点赞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Redis%E6%96%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">8.Redis新的数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E7%9D%80%E4%B8%89%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">为什么会有着三种数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%BF%E7%BA%A7%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%BB%9F%E8%AE%A1"><span class="toc-text">亿级系统中常见的四种统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bitmap"><span class="toc-text">bitmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hyperloglgo"><span class="toc-text">hyperloglgo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GEO"><span class="toc-text">GEO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8BloomFilter"><span class="toc-text">9.布隆过滤器BloomFilter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-text">什么是布隆过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9%E5%92%8C%E8%80%83%E7%82%B9"><span class="toc-text">特点和考点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E4%B8%AD%E7%9A%84%E4%BC%A0%E7%BB%9Fhash"><span class="toc-text">Java中的传统hash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">布隆过滤器实现原理和数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-text">使用步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%88%A0%E9%99%A4"><span class="toc-text">为什么不删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E8%B0%B7%E9%B8%9F%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-text">布谷鸟过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9-%E7%A9%BF%E9%80%8F-%E5%87%BB%E7%A9%BF"><span class="toc-text">10.缓存雪崩&#x2F;穿透&#x2F;击穿</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-text">缓存雪崩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-text">缓存穿透</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-text">缓存击穿</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%86%85%E5%AE%B9%E6%80%BB%E7%BB%93"><span class="toc-text">缓存内容总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-text">11.分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%85%A5"><span class="toc-text">面试题引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%90%86%E8%AE%BA"><span class="toc-text">分布式锁理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAP%E7%90%86%E8%AE%BA"><span class="toc-text">CAP理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E6%BC%94%E5%8F%98%E8%BF%87%E7%A8%8B"><span class="toc-text">分布式锁演变过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E6%80%BB%E7%BB%93"><span class="toc-text">分布式锁总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%9C%BA%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">多机环境下的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RedLock%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text">RedLock源码分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-Redis%E4%B8%AD%E8%BF%87%E6%9C%9F%E9%94%AE%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5"><span class="toc-text">12.Redis中过期键删除策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E5%88%A0%E9%99%A4"><span class="toc-text">立即删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%B0%E6%80%A7%E5%88%A0%E9%99%A4"><span class="toc-text">惰性删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%9C%9F%E5%88%A0%E9%99%A4"><span class="toc-text">定期删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-Redis%E4%B8%AD%E7%BC%93%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="toc-text">13.Redis中缓存淘汰策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-Redis%E4%B8%AD%E6%BA%90%E7%A0%81%E6%A6%82%E8%BF%B0"><span class="toc-text">14.Redis中源码概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8EHelloWorld%E8%AF%B4%E8%B5%B7"><span class="toc-text">从HelloWorld说起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RedisObject%E8%AF%B4%E6%98%8E"><span class="toc-text">RedisObject说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">Redis数据结构和数据类型的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E6%BA%90%E7%A0%81"><span class="toc-text">Redis源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E4%B8%AD%E7%9A%84KV%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-text">Redis中的KV键值对</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-Redis%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%AF%A6%E8%A7%A3"><span class="toc-text">15.Redis中的数据类型详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%8D%E9%A6%88-1"><span class="toc-text">面试题反馈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String%E7%B1%BB%E5%9E%8B"><span class="toc-text">String类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash%E7%B1%BB%E5%9E%8B"><span class="toc-text">Hash类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#list%E7%B1%BB%E5%9E%8B"><span class="toc-text">list类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%E7%B1%BB%E5%9E%8B"><span class="toc-text">Set类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zset%E7%B1%BB%E5%9E%8B"><span class="toc-text">Zset类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%B3%E8%A1%A8%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-text">跳表面试题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-text">小总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93-1"><span class="toc-text">小总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-cannal%E5%85%A5%E9%97%A8%E6%A6%82%E8%BF%B0"><span class="toc-text">16.cannal入门概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFcanal"><span class="toc-text">什么是canal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-%E6%A1%88%E4%BE%8B"><span class="toc-text">配置使用&#x2F;案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E5%B7%A5%E7%A8%8B%E6%A1%88%E4%BE%8B"><span class="toc-text">17.双写一致性工程案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E6%8A%A2%E7%BA%A2%E5%8C%85%E6%A1%88%E4%BE%8B"><span class="toc-text">微信抢红包案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-text">18.双写一致性更新策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84%EF%BC%9A%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text">目的：最终一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%86%8D%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98"><span class="toc-text">先更新数据库，再更新缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%EF%BC%8C%E5%86%8D%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">先删除缓存，再更新数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%86%8D%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98"><span class="toc-text">先更新数据库，再删除缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E8%AE%B8%E9%97%AE%EF%BC%9A%E5%85%88%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98%EF%BC%8C%E5%86%8D%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%99%E7%A7%8D%E7%AD%96%E7%95%A5"><span class="toc-text">不许问：先更新缓存，再更新数据库这种策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="toc-text">19.I&#x2F;O多路复用模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E5%B9%B6%E5%8F%91%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5"><span class="toc-text">Redis单线程如何处理并发客户端连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83Redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="toc-text">参考Redis设计与实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="toc-text">重要概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unix%E4%B8%AD%E7%9A%84%E4%BA%94%E7%A7%8DIO%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-text">Unix中的五种IO编程模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8-1"><span class="toc-text">IO多路复用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-text">20.I&#x2F;O多路复用具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#select%E6%96%B9%E6%B3%95"><span class="toc-text">select方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93-%E6%84%9F%E6%82%9F"><span class="toc-text">21.课程总结&#x2F;感悟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A5%E4%B8%8B%E6%98%AF%E5%AF%B9Redis%E4%B8%8D%E7%86%9F%E6%82%89%E7%9A%84%E5%86%85%E5%AE%B9%E8%A1%A5%E5%85%85"><span class="toc-text">&#x3D;&#x3D;以下是对Redis不熟悉的内容补充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E4%BA%8B%E5%8A%A1"><span class="toc-text">22.事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88-%E8%83%BD%E5%B9%B2%E5%98%9B"><span class="toc-text">是什么&#x2F;能干嘛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%8E%A9"><span class="toc-text">怎么玩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A%E4%B8%89%E9%98%B6%E6%AE%B5-%E4%B8%89%E7%89%B9%E6%80%A7"><span class="toc-text">总结：三阶段&#x2F;三特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-%E6%B6%88%E6%81%AF%E8%AE%A2%E9%98%85%E5%8F%91%E5%B8%83%E7%AE%80%E4%BB%8B"><span class="toc-text">23.消息订阅发布简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-1"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24-Jedis%E5%AE%9E%E7%8E%B0%E4%BA%8B%E5%8A%A1"><span class="toc-text">24.Jedis实现事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8"><span class="toc-text">日常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E9%94%81-1"><span class="toc-text">加锁</span></a></li></ol></li></ol></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=894519210 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/zhaoo "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:izhaoo@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/kygeng/js/color-mode.js"></script>
+
+  
+  
+    <div class="search">
+  <div class="search-container">
+    <div class="search-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <div class="search-input-wrapper">
+      <i class="search-input-icon iconfont iconsearch"></i>
+      <input class="search-input" type="search" id="search-input" placeholder="Search..." autofocus autocomplete="off"
+        autocorrect="off" autocapitalize="off">
+    </div>
+    <div class="search-output" id="search-output"></div>
+  </div>
+</div>
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/kygeng/js/utils.js"></script>
+<script src="/kygeng/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
